@@ -1,0 +1,62 @@
+/* css中的box-sizing属性，可以解决子元素宽度100%时，设置padding不超出父元素宽度 */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+}
+
+p, h1, h2, h3, h4, h5, h6, ul, li {
+  padding: 0;
+  margin: 0;
+}
+
+.hide {
+  display: none !important;
+}
+
+.f-right {
+  float: right;
+}
+
+.f-left {
+  float: left;
+}
+
+/* 清除浮动 */
+.clear-fix {
+  display: inline-block;
+  content: "";
+  clear: both;
+  zoom: 1;
+}
+
+ul {
+  li {
+    list-style: none;
+  }
+}
+
+/* 文本超出宽度换行 */
+.text-overflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* flex布局 */
+.flex {
+  display: flex;
+}
+
+.flex-align {
+  align-items: center;
+}
+
+.flex-justify {
+  justify-content: center;
+}
