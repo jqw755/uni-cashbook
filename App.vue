@@ -12,11 +12,7 @@
 	}
 </script>
 
-<style>
+<style lang=scss>
 	/*每个页面公共css */
-	page {
-		display: flex;
-		min-height: 100%;
-		overflow-x: hidden;
-	}
+	@import url("./style/base.scss");
 </style>
