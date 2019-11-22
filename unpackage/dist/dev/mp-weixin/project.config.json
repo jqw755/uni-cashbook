@@ -1,0 +1,40 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.6.6",
+	"appid": "touristappid",
+	"projectname": "%E5%AE%B6%E5%BA%AD%E8%AE%B0%E8%B4%A6%E6%9C%AC",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"name": "联系人",
+					"query": "",
+					"id": 0,
+					"pathName": "pages/contacts/contacts"
+				}
+			]
+		}
+	}
+}

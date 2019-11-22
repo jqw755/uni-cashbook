@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/contacts/contacts",
+    "pages/statistics/statistics",
+    "pages/my/my"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "家庭记账本",
+    "navigationStyle": "custom",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#C0C4CC",
+    "selectedColor": "#fa436a",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabbar/order.png",
+        "selectedIconPath": "static/tabbar/select-order.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/statistics/statistics",
+        "iconPath": "static/tabbar/statistics.png",
+        "selectedIconPath": "static/tabbar/select-statistics.png",
+        "text": "统计"
+      },
+      {
+        "pagePath": "pages/contacts/contacts",
+        "iconPath": "static/tabbar/chart.png",
+        "selectedIconPath": "static/tabbar/select-chart.png",
+        "text": "圈子"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "static/tabbar/my.png",
+        "selectedIconPath": "static/tabbar/select-my.png",
+        "text": "我"
+      }
+    ]
+  },
+  "usingComponents": {
+    "navbar": "/components/navbar"
+  }
+}

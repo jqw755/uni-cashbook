@@ -1,45 +1,8 @@
 /* css中的box-sizing属性，可以解决子元素宽度100%时，设置padding不超出父元素宽度 */
-page, div, p,span,b,i,img,image,view,text,textarea,input,ul,li,ol,h1, h2, h3, h4, h5, h6,
-iframe,
-pre,
-a,
-address,
-code,
-del,
-em,
-q,
-s,
-small,
-strong,
-sub,
-sup,
-u,
-center,
-dl,
-dt,
-dd,
-form,
-label,
-legend,
-table,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-embed,
-figure,
-footer,
-header,
-menu,
-nav,
-section,
-audio,
-video{
+body,page, div, p,span,b,i,img,image,text,textarea,input,ul,li,ol,h1, h2, h3, h4, h5, h6,
+iframe,pre,a,address,code,del,em,q,s,small,strong,sub,sup,u,center,dl,dt,dd,form,label,legend,
+table,tbody,tfoot,thead,tr,th,td,article,aside,canvas,embed,figure,footer,header,menu,nav,
+section,audio,video,view,scroll-view,swiper,button,navigator{
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -48,14 +11,23 @@ video{
 	margin: 0;
 }
 
+html, body{
+	min-height: 100%;
+}
+
 page{
 	display: flex;
+	width: 100%;
 	min-height: 100%;
 	overflow-x: hidden;
 	background-color: #f1f1f1;
 	font-size: 28rpx;
 	color: #333333;
 	font-family: Helvetica Neue, Helvetica, sans-serif;
+}
+
+.container{
+	width: 100%;
 }
 
 .hide {
@@ -78,11 +50,10 @@ page{
   zoom: 1;
 }
 
-ul {
-  li {
-    list-style: none;
-  }
+ul li {
+  list-style: none;
 }
+
 
 /* 文本超出宽度换行 */
 .text-overflow {
@@ -106,4 +77,37 @@ ul {
 
 .flex-justify {
   justify-content: center;
+}
+
+/* 块阴影 */
+.box-shadow{
+	box-shadow: 0 0 20rpx rgba(0,0,0,.1);
+}
+
+/* 翘边阴影 */
+
+
+/* 按钮公用样式 */
+.cb-btn{
+	padding: 0 30rpx;
+	font-size: 28rpx;
+	position: relative;
+	border: 0;
+	border-radius: 4rpx;
+	transform: translate(0, 0);
+
+}
+// 按住按钮样式
+.cb-btn.button-hover{
+	transform: translate(2rpx, 2rpx);
+	pointer-events: none;
+}
+// 大圆角按钮
+.cb-btn.round{
+	border-radius: 99px;
+}
+
+// 超链接点击效果
+.a-hover{
+		transform: translate(2rpx, 2rpx);
 }
