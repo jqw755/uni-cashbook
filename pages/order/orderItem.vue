@@ -54,14 +54,15 @@
 <style lang="scss">
 	.order-item-wrap {
 		padding: 0 32rpx;
+		background: #f6f6f6;
 
 		&:active {
 			background: #ddd;
 		}
 
 		.order-type-icon {
-			width: 82rpx;
-			height: 82rpx;
+			width: 90rpx;
+			height: 90rpx;
 			border-radius: 50%;
 			background: #f4f4f4;
 			margin-right: 20rpx;

@@ -150,7 +150,7 @@
 	}
 
 	.page-middle-wrap {
-		position: relative;
+		// position: relative;
 
 		.last-order-title {
 			width: 100%;
