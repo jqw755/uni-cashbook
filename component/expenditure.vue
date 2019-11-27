@@ -1,8 +1,8 @@
 <template>
-	<view class="income-wrap flex">
-		<view :class="['income-item', { active: item.id === selectedId }]" v-for="(item, index) in incomeList" :key="index" @tap="chooseIncome(item)">
+	<view class="expenditure-wrap flex">
+		<view :class="['expenditure-item', { active: item.id === selectedId }]" v-for="(item, index) in expenditureList" :key="index" @tap="chooseExpenditure(item)">
 			<view :class="['icons', item.icon]"></view>
-			<view class="income-name">{{ item.name }}</view>
+			<view class="expenditure-name">{{ item.name }}</view>
 		</view>
 	</view>
 </template>
@@ -12,7 +12,7 @@ export default {
 	data() {
 		return {
 			selectedId: 0,
-			incomeList: [
+			expenditureList: [
 				{
 					id: 0,
 					name: '蔬菜',
@@ -73,18 +73,18 @@ export default {
 	},
 	created() {},
 	methods: {
-		chooseIncome(income) {
-			this.selectedId = income.id;
-			this.$emit('chooseIncome', income);
+		chooseExpenditure(expenditure) {
+			this.selectedId = expenditure.id;
+			this.$emit('chooseExpenditure', expenditure);
 		}
 	}
 };
 </script>
 
 <style lang="scss">
-.income-wrap {
+.expenditure-wrap {
 	flex-wrap: wrap;
-	.income-item {
+	.expenditure-item {
 		font-size: 24rpx;
 		color: #999;
 		text-align: center;
@@ -102,7 +102,7 @@ export default {
 			.icons {
 				background: #32d446;
 			}
-			.income-name {
+			.expenditure-name {
 				color: #000;
 			}
 		}
