@@ -1,4 +1,4 @@
-import config from '/common/config.js'
+import config from '@/common/config.js'
 
 /** 
  @param url: 接口地址
@@ -9,11 +9,11 @@ import config from '/common/config.js'
  */
 const api = ({
 	url = '/',
-	method: 'POST',
+	method = 'GET',
 	data = {},
 	header = {},
-	notLoading: false,
-	notToken: false
+	notLoading = false,
+	notToken = false
 }) => {
 
 	// 如果此接口需要token
@@ -26,7 +26,7 @@ const api = ({
 		if (data.hasOwnProperty(k)) {
 			let val = data[k]
 			if (val === null || val === undefined) {
-				val = ""
+				data[k] = ""
 			}
 		}
 	}
@@ -41,17 +41,33 @@ const api = ({
 
 	return new Promise((resolve, reject) => {
 		let reqConfig = {
-			url: config.getConfig() + url,
+			url: config.getConfig().baseUrl + url,
 			method,
 			data,
 			header,
 			success(res) {
-				console.log(res.data);
-				resolve(res.data)
+				const {
+					code,
+					data,
+					msg
+				} = res.data;
+
+				if (code === 0 && data) {
+					resolve(data)
+				} else {
+					reject({
+						code,
+						msg
+					})
+				}
 			},
 			fail(e) {
 				console.log(e)
-				reject(e)
+				const msg = "服务出错，请稍后再试"; // 错误提示
+				reject({
+					code: -999,
+					msg: e.errMsg || msg
+				});
 			},
 			complete() {
 				if (!notLoading) {
