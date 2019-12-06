@@ -21,14 +21,28 @@
 
 			<!-- 分类列表 -->
 			<view class="cate-list-wrap">
-				<view class="by-income-wrap">
-					<text>收入：</text>
-					<income />
-				</view>	
-				
-				<view class="by-expenditure-wrap">
-					<text>支出：</text>
-					<expenditure />
+				<!-- 收入 -->
+				<view class="cate-item-wrap by-income-wrap">
+					<view class="by-cate-title flex flex-align" @tap="tapCateTitle(1)">
+						<text>收入：{{ incomeSelObj.name }}</text>
+						<text class="icons icon-xiajiantou"></text>
+					</view>
+
+					<view :class="['page-cate-list-wrap', { down: isShowIncome }]">
+						<view class="page-cate-list-content"><income @chooseIncome="chooseIncome" /></view>
+					</view>
+				</view>
+
+				<!-- 支出 -->
+				<view class="cate-item-wrap by-expenditure-wrap">
+					<view class="by-cate-title flex flex-align" @tap="tapCateTitle(2)">
+						<text>支出：{{ expenditureSelObj.name }}</text>
+						<text class="icons icon-xiajiantou"></text>
+					</view>
+
+					<view :class="['page-cate-list-wrap', { down: isShowExpend }]">
+						<view class="page-cate-list-content"><expenditure @chooseExpenditure="chooseExpenditure" /></view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -37,7 +51,7 @@
 		<chart />
 
 		<!-- 排行，最高最低的前十 -->
-		<ranking />
+		<ranking :rankingTopOrders="rankingTopOrders" :rankingLastOrders="rankingLastOrders" :rankingDateType="rankingDateType" />
 	</view>
 </template>
 
@@ -48,13 +62,14 @@
 	.by-wrap {
 		.by-title-wrap {
 			padding: 20rpx 20rpx;
-			background: #f4f4f4;
+			background: linear-gradient(-90deg, #be6450, #a242eb);
 			.by-title-tip {
 				font-size: 40rpx;
 				font-weight: bold;
 				margin-right: 20rpx;
 				padding-left: 16rpx;
 				position: relative;
+				color: #fff;
 				&::before {
 					content: '';
 					display: block;
@@ -66,14 +81,14 @@
 					top: 10%;
 					border-radius: 4rpx;
 				}
-				&.cate-title{
+				&.cate-title {
 					&::before {
 						background: #ffde3f;
 					}
 				}
 			}
 			.by-title-desc {
-				color: #999;
+				color: #ccc;
 				font-size: 26rpx;
 			}
 		}
@@ -86,9 +101,53 @@
 
 		&.by-cate-wrap {
 			margin-bottom: 40rpx;
-			.cate-list-wrap{
+			.cate-list-wrap {
 				padding: 32rpx 52rpx;
+
+				.cate-item-wrap {
+					.by-cate-title {
+						height: 80rpx;
+						justify-content: space-between;
+						border-bottom: 1px solid #ddd;
+						&:last-child {
+							border-bottom: 0;
+						}
+					}
+
+					.page-cate-list-wrap {
+						background: #f4f4f4;
+						border-radius: 10rpx;
+						transition: height 300ms;
+						overflow: hidden;
+						height: 0;
+						.page-cate-list-content {
+							padding: 20rpx 20rpx;
+						}
+						&.down {
+							height: 200rpx;
+							overflow: scroll;
+						}
+					}
+				}
 			}
+		}
+	}
+
+	// 折叠面板效果
+	@keyframes foldUp {
+		from {
+			height: 0;
+		}
+		to {
+			height: auto;
+		}
+	}
+	@keyframes foldDown {
+		from {
+			height: auto;
+		}
+		to {
+			height: 0;
 		}
 	}
 }
@@ -106,7 +165,20 @@ import expenditure from '@/component/expenditure.vue';
 export default {
 	data() {
 		return {
-			dateResult: '' // 选中的日期
+			dateResult: '', // 选中的日期
+
+			isShowIncome: false, // 是否展示更多收支类型
+			isShowExpend: false, // 是否展示更多支出类型
+
+			incomeSelObj: {}, // 选中的收入数组
+
+			expenditureSelObj: {}, // 选中的支出数组
+
+			rankingDateType: 0, // 根据页面上日期筛选类型展示
+
+			rankingTopOrders: [{}], // 收入最高
+
+			rankingLastOrders: [{}] // 支出最高
 		};
 	},
 
@@ -118,15 +190,39 @@ export default {
 			if (res === 0) {
 				const currentDate = utils.formatDate(Date.now(), 'yyyy-MM');
 				this.dateResult = currentDate;
+				this.rankingDateType = 0;
 			}
 			if (res === 1) {
 				this.dateResult = new Date().getFullYear();
+				this.rankingDateType = 1;
 			}
 		},
 
 		// 选择日期
 		chooseDate(res) {
 			this.dateResult = res;
+		},
+
+		// 切换收支类型展示更多
+		tapCateTitle(n) {
+			switch (n) {
+				case 1:
+					this.isShowIncome = !this.isShowIncome;
+					break;
+				case 2:
+					this.isShowExpend = !this.isShowExpend;
+					break;
+			}
+		},
+
+		// 选择收入类型
+		chooseIncome(data) {
+			this.incomeSelObj = data;
+		},
+
+		// 选择支出类型
+		chooseExpenditure(data) {
+			this.expenditureSelObj = data;
 		}
 	},
 

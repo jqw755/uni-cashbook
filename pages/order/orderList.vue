@@ -3,7 +3,9 @@
 		<!-- 导航栏 -->
 		<navbar><view slot="contentText">账单列表</view></navbar>
 
-		<view class="list-item" v-for="(item, index) in orderList" :key="index"><order-item :order-data="item" /></view>
+		<view class="list-item" v-for="(item, index) in orderList" :key="index">
+			<order-item :order-data="item" />
+		</view>
 	</view>
 </template>
 

@@ -1,4 +1,10 @@
 const utils = {
+	
+	// 验证密码 必须包含数字、字母、字符三种
+	checkPwd(pwd){
+		return (/(?=.*[a-z])(?=.*\d)(?=.*[#@!~%^&?$*])[a-z\d#@!~%^&?$*]{6,20}/i).test(pwd)
+	},
+	
 	// 验证手機號
 	checkMobile(m) {
 		return /(^1[3|4|5|7|8][0-9]{9}$)/.test(m)
