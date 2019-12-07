@@ -9,7 +9,7 @@ import config from '@/common/config.js'
  */
 const api = ({
 	url = '/',
-	method = 'GET',
+	method = 'POST',
 	data = {},
 	header = {},
 	notLoading = false,
@@ -44,6 +44,7 @@ const api = ({
 			url: config.getConfig().baseUrl + url,
 			method,
 			data,
+			dataType: 'json',
 			header,
 			success(res) {
 				const {

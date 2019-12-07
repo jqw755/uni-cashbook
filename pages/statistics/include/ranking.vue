@@ -54,7 +54,7 @@ export default {
 				return [];
 			}
 		},
-		// 日期排行榜类型 （年，月）
+		// 日期排行榜类型 （年，月） 根据页面上日期筛选类型展示
 		rankingDateType: {
 			type: Number,
 			default() {
@@ -65,7 +65,6 @@ export default {
 	data() {
 		return {
 			swiperIndex: 0, // 当前swiper所在的current
-			rankingDateType: '', // 根据页面上日期筛选类型展示
 		};
 	},
 	created() {},

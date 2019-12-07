@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="77ea3987-c4f4-44ee-80b7-c10a14a799eb" name="Default Changelist" comment="" />
+    <list default="true" id="77ea3987-c4f4-44ee-80b7-c10a14a799eb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -12,26 +14,21 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="uat" />
+      </map>
+    </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="184" />
-    <option name="y" value="206" />
-    <option name="width" value="1622" />
-    <option name="height" value="983" />
+    <option name="x" value="406" />
+    <option name="y" value="32" />
+    <option name="width" value="1500" />
+    <option name="height" value="960" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -42,8 +39,8 @@
         <subPane>
           <expand>
             <path>
-              <item name="cashbook" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cashbook" type="462c0819:PsiDirectoryNode" />
+              <item name="uni-cashbook" type="b2602c69:ProjectViewProjectNode" />
+              <item name="uni-cashbook" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -87,22 +84,19 @@
       <option name="presentableId" value="Default" />
       <updated>1574824235731</updated>
       <workItem from="1574824236963" duration="338000" />
+      <workItem from="1575459971837" duration="66000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="338000" />
+    <option name="totallyTimeSpent" value="1124000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="137" y="37" width="1622" height="983" extended-state="0" />
+    <frame x="325" y="26" width="1200" height="768" extended-state="0" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.32972324" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -110,6 +104,10 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.2437107" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -125,6 +123,9 @@
           <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/component/bolang.svg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
   </component>
 </project>

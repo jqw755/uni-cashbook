@@ -12,7 +12,7 @@
 				<view class="balance-wrap text-center">
 					<view class="balance-content ">
 						<text class="money-tip">￥</text>
-						<text class="money-num">1.21</text>
+						<text class="money-num">{{balance}}</text>
 					</view>
 
 					<view class="balance-tip ">
@@ -59,6 +59,7 @@
 	export default {
 		data() {
 			return {
+				balance: '',
 				orderList: [],
 			}
 		},
@@ -67,9 +68,32 @@
 			this.getOrderList();
 		},
 
-		onReady() {},
+		// 下拉刷新
+		async onPullDownRefresh() {
+			await this.getBalance();
+			uni.startPullDownRefresh();
+		    this.getOrderList();
+		},
 
 		methods: {
+			// 获取最新余额
+			getBalance() {
+				return this.$api({
+					url: '/main/getBalance',
+					data: {
+						userId: 1
+					}
+				}).then(res => {
+					if (res) {
+						this.balance = res.data;
+						return res;
+					}
+				}).catch(e => {
+					this.$toast(e.msg);
+				}).finally(() => {
+				})
+			},
+
 			getOrderList() {
 				this.$api({
 					url: '/order/list',
@@ -78,7 +102,7 @@
 						pageSize: 10
 					}
 				}).then(res => {
-					if (res.list) {
+					if (res && res.list) {
 						// 只取前10条
 						let num = res.list.length;
 						if (num > 10) {
@@ -90,6 +114,7 @@
 					this.$toast(e.msg);
 				}).finally()
 			},
+
 		},
 
 		components: {
