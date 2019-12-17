@@ -29,7 +29,7 @@ export default {
 	methods: {
 		// 添加家庭成员
 		addMember() {
-			this.$toast('添加家庭成员');
+			this.$emit('toAddMember', true)
 		},
 		
 		// 点击查看家庭成员信息

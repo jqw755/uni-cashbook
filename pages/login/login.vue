@@ -24,7 +24,7 @@
 				</view>
 				<input :type="pwdType" :value="userpwd" @input="inputPwd" placeholder="请输入密码">
 				<view class="img" @tap="switchPwd">
-					<image class="img_pwd_switch" src="/static/login/icon_pwd_switch.png" />
+					<image class="img_pwd_switch" src="/static/login/close-pwd.png" />
 				</view>
 			</view>
 		</view>
@@ -180,8 +180,8 @@
 			}
 
 			.img_pwd_switch {
-				width: 28px;
-				height: 12px;
+				width: 48rpx;
+				height: 48rpx;
 			}
 
 			input {

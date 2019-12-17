@@ -18,30 +18,28 @@
 			</view>
 
 			<swiper class="swiper-wrap" :current="currentTab" @change="changeSwiper" duration="300">
-				<swiper-item class="swiper-item"><family-member /></swiper-item>
+				<swiper-item class="swiper-item"><family-member @toAddMember="addMember" /></swiper-item>
 
 				<swiper-item class="swiper-item">
 					<order-item v-for="(item, index) in orderList" :key="index" :order-data="item" />
 
-					<view class="no-order-wrap" v-if="!orderList.length">
-						<emptyData noDataDesc="暂无订单"  />
-					</view>
+					<view class="no-order-wrap" v-if="!orderList.length"><emptyData noDataDesc="暂无订单" /></view>
 				</swiper-item>
 
 				<swiper-item class="swiper-item">
-					
-					<view class="no-order-wrap" v-if="!photos.length">
-						<emptyData noDataDesc="暂无相册"  />
-					</view>
-					
+					<view class="no-order-wrap" v-if="!photos.length"><emptyData noDataDesc="暂无相册" /></view>
 				</swiper-item>
 			</swiper>
 		</view>
+
+		<!-- 添加成员diolog -->
+		<add-member :isShowDialog="isShowDialog" @closeDialog="closeDialog"></add-member>
 	</view>
 </template>
 
 <script>
-import familyMember from './include/family-member.vue';
+import addMember from './include/addMember.vue';
+import familyMember from './include/familyMember.vue';
 import orderItem from '../order/orderItem.vue';
 import emptyData from '@/component/emptyData.vue';
 export default {
@@ -50,7 +48,9 @@ export default {
 			currentTab: 0,
 			tabList: [{ id: 0, name: '家庭' }, { id: 1, name: '订单' }, { id: 2, name: '相册' }],
 			orderList: [],
-			photos:[]
+			photos: [],
+
+			isShowDialog: false // 是否显示添加成员dialog
 		};
 	},
 	onLoad() {},
@@ -62,9 +62,17 @@ export default {
 		// 点击tab
 		changeTab(id) {
 			this.currentTab = id;
+		},
+		// 添加成员
+		addMember(e) {
+			this.isShowDialog = e;
+		},
+		// 关闭添加成员dialog
+		closeDialog(e) {
+			this.isShowDialog = e;
 		}
 	},
-	components: { familyMember, orderItem, emptyData }
+	components: { addMember, familyMember, orderItem, emptyData }
 };
 </script>
 
@@ -145,7 +153,7 @@ export default {
 			min-height: calc(100vh - 520rpx);
 			// padding: 0 40rpx;
 			background: #fff;
-			.no-order-wrap{
+			.no-order-wrap {
 				margin-top: 100rpx;
 			}
 		}

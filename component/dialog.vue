@@ -1,7 +1,7 @@
 <template>
 	<view class="dialog-wrap" v-if="isShowDialogData">
 		<!-- 弹窗阴影遮罩 -->
-		<view class="dialog-mask" @tap="cancelEvt"></view>
+		<view class="dialog-mask" @tap="tapMask"></view>
 
 		<view class="dialog-content-wrap">
 			<!-- 弹窗标题 -->
@@ -37,6 +37,15 @@ export default {
 				return false;
 			}
 		},
+		// 点击mask是否关闭弹窗
+		isMaskClose: {
+			type: Boolean,
+			required: false,
+			default() {
+				return false;
+			}
+		},
+		
 		// 是否显示取消按钮
 		isShowCancelBtn: {
 			type: Boolean,
@@ -54,9 +63,16 @@ export default {
 
 	created() {
 		// 值类型的props不允许直接修改，这里赋值给data解决
+		// this.isShowDialogData = this.isShowDialog;
 	},
 
 	methods: {
+		// 点击mask
+		tapMask(){
+			if(this.isMaskClose){
+				this.cancelEvt();
+			}
+		},
 		// 关闭弹窗
 		cancelEvt() {
 			this.isShowDialogData = false;
@@ -77,7 +93,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .dialog-wrap {
 	width: 100%;
 	height: 100%;
@@ -130,11 +146,12 @@ export default {
 			line-height: 98rpx;
 			border-top: 1px solid #e7e8e9;
 			font-size: 36rpx;
-			text-align: center;
 			margin-top: 32rpx;
+			text-align: center;
 			.btn {
 				flex: 1;
 				height: 100%;
+				text-align: center;
 				position: relative;
 				&.current {
 					background: #f4f4f4;

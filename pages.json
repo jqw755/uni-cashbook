@@ -17,10 +17,6 @@
 			"style": {}
 		},
 		{
-			"path": "pages/register/register",
-			"style": {}
-		},	
-		{
 			"path": "pages/index/index",
 			"style": {
 				"enablePullDownRefresh": true
