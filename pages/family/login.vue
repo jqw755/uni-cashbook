@@ -3,7 +3,7 @@
 		<!-- 头部logo -->
 		<view class="head-wrap flex flex-align flex-justify">
 			<view class="head-bg flex flex-justify">
-				<image src="/static/login/head.png" class="head-logo" />
+				<image src="/static/login/family-logo.png" class="head-logo" />
 			</view>
 		</view>
 		<!-- 登录form -->
@@ -12,7 +12,7 @@
 				<view class="img">
 					<image style="width:22px;height: 22px;" src="/static/login/icon_user.png" />
 				</view>
-				<input type="text" v-model="username" placeholder="请输入账号">
+				<input type="text" v-model="username" placeholder="请输入家庭账号">
 				<view class="img">
 					<image @tap="delUser" class="img_del" src="/static/login/icon_del.png" />
 				</view>
@@ -22,7 +22,7 @@
 				<view class="img">
 					<image style="width:18px;height: 22px;" src="/static/login/icon_pwd.png" />
 				</view>
-				<input :type="pwdType" :value="userpwd" @input="inputPwd" placeholder="请输入密码">
+				<input :type="pwdType" :value="userpwd" @input="inputPwd" placeholder="请输入家庭密码">
 				<view class="img" @tap="switchPwd">
 					<image class="img_pwd_switch" src="/static/login/icon_pwd_switch.png" />
 				</view>
@@ -33,7 +33,7 @@
 		<button class="submit-login" type="primary" @tap="login">登录</button>
 
 		<view class="opts flex flex-align">
-			<text @tap="goReg" class="text">立即注册</text>
+			<text @tap="goReg" class="text">家庭注册</text>
 			<text @tap="findPwd" class="text">忘记密码？</text>
 		</view>
 
@@ -82,6 +82,10 @@
 					data: params,
 					method: 'GET'
 				}).then(res => {
+					// 重定向到家庭账户页面
+					uni.redirectTo({
+						url: '/pages/family/index'
+					});
 
 					// res = res.data;
 					// res.userInfo.avatar = `${getConfig().serverUrl}${res.userInfo.avatar}`;
@@ -108,7 +112,7 @@
 			},
 			goReg() {
 				uni.navigateTo({
-					url: '/pages/register/register'
+					url: '/pages/family/register'
 				})
 			}
 		}
@@ -134,16 +138,11 @@
 		padding: 60rpx 0 30rpx;
 
 		.head-bg {
-			border-radius: 50%;
-			width: 180rpx;
-			height: 180rpx;
-			background: #fc2c5d;
 			align-items: flex-end;
-			overflow: hidden;
 
 			.head-logo {
-				width: 58px;
-				height: 66px;
+				width: 128rpx;
+				height: 128rpx;
 			}
 		}
 	}

@@ -11,8 +11,9 @@
 				<view class="time">{{formatTime}}</view>
 			</view>
 
-			<view :class="['order-money-wrap', {'active':orderData.type!==1}]">
-				<text>{{orderData.type===1?'-':'+'}}</text>
+			<view :class="['order-money-wrap', {'active':orderData.type===2}]">
+				<text v-if="orderData.type===1">-</text>
+				<text v-if="orderData.type===2">+</text>
 				<text class="money-num">{{orderData.money}}</text>
 			</view>
 		</view>
