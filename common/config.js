@@ -1,5 +1,5 @@
 let config = {
-	active: "test", // 环境变量
+	active: "dev", // 环境变量
 
 	globalImgUrl: "/static/images", //	静态图片主路径
 
@@ -12,7 +12,8 @@ let config = {
 
 	// 各个环境下域名
 	dev: {
-		baseUrl: "http://rap2api.taobao.org/app/mock/237547",
+		// baseUrl: "http://rap2api.taobao.org/app/mock/237547",
+		baseUrl: "http://localhost:3000/cashbook/api/v1",
 	},
 	test: {
 		baseUrl: "http://192.168.1.106:8080/cashbook"

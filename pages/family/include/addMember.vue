@@ -5,7 +5,7 @@
 			<view slot="content">
 				<view class="member-register">
 					<!-- 头部logo -->
-					<view class="head-bg flex flex-justify"><image src="/static/login/head.png" class="head-logo" /></view>
+					<view class="head-bg flex flex-justify" @tap="changeLocalPic"><image src="/static/login/head.png" class="head-logo" /></view>
 
 					<!-- 登录form -->
 					<view class="login_form flex flex-align flex-justify">
@@ -62,6 +62,20 @@ export default {
 	},
 	created() {},
 	methods: {
+		// 选择本地图片上传头像
+		changeLocalPic(){
+			this.$api({
+				url: '/family/uploadAvatar',
+				data: params
+			})
+				.then(res => {})
+				.catch(e => {
+					this.$toast(e.msg);
+				})
+				.finally(() => {
+					this.isSubmiting = false;
+				});
+		},
 		// 输入账户
 		inputUsername(e) {
 			this.username = e.target.value;
