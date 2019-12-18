@@ -6,14 +6,14 @@
 		<!-- form -->
 		<view class="login_form flex flex-align flex-justify">
 			<view class="input-wrap flex flex-align flex-justify">
-				<input type="text" v-model="username" placeholder="请输入家庭账号" />
+				<input type="text" v-model="familyName" placeholder="请输入家庭账号" />
 				<view class="img"><image @tap="delUser" class="img_del" src="/static/login/clear-ipt.png" /></view>
 			</view>
 
 			<view class="line" />
 
 			<view class="input-wrap flex flex-align flex-justify">
-				<input :type="pwdType" :value="userpwd" @input="inputPwd" placeholder="请输入家庭密码" />
+				<input :type="pwdType" :value="password" @input="inputPwd" placeholder="请输入家庭密码" />
 				<view class="img" @tap="switchPwd">
 					<image class="img_pwd_switch" v-show="pwdType === 'password'" src="/static/login/close-pwd.png" />
 					<image class="img_pwd_switch" v-show="pwdType === 'text'" src="/static/login/open-pwd.png" />
@@ -35,21 +35,23 @@
 export default {
 	data() {
 		return {
-			username: '',
-			userpwd: '',
+			familyAvatar: '',
+			familyName: '',
+			password: '',
 			userConfirmPwd: '',
 			pwdType: 'password',
 			isSubmiting: false
 		};
 	},
+	onLoad() {},
 	methods: {
 		// 输入账户
 		inputUsername(e) {
-			this.username = e.target.value;
+			this.familyName = e.target.value;
 		},
 		// 输入密码
 		inputPwd(e) {
-			this.userpwd = e.target.value;
+			this.password = e.target.value;
 		},
 		// 确认密码
 		inputConfirmPwd(e) {
@@ -57,7 +59,7 @@ export default {
 		},
 		// 清空账户
 		delUser() {
-			this.username = '';
+			this.familyName = '';
 		},
 		// 查看密码
 		switchPwd() {
@@ -65,38 +67,46 @@ export default {
 		},
 		// 注册
 		registerEvt() {
-			const username = this.username,
-				userpwd = this.userpwd,
+			const familyName = this.familyName,
+				password = this.password,
 				userConfirmPwd = this.userConfirmPwd;
 
-			if (!username.trim()) {
-				this.$toast('请输入账号');
+			if (!familyName.trim()) {
+				this.$common.toast('请输入账号');
 				return;
 			}
-			if (!userpwd.trim()) {
-				this.$toast('请输入密码');
+			if (!password.trim()) {
+				this.$common.toast('请输入密码');
 				return;
 			}
 			if (!userConfirmPwd.trim()) {
-				this.$toast('请输入确认密码');
+				this.$common.toast('请输入确认密码');
 				return;
 			}
-			if (userConfirmPwd.trim() !== userpwd.trim()) {
-				this.$toast('两次密码输入不一致');
+			if (userConfirmPwd.trim() !== password.trim()) {
+				this.$common.toast('两次密码输入不一致');
 				return;
 			}
 			const params = {
-				username,
-				password: userpwd
+				familyName,
+				password: password
 			};
 			this.isSubmiting = true;
 			this.$api({
-				url: '/user/regist',
-				data: params
+				url: '/family/register',
+				data: params,
+				notToken: true
 			})
-				.then(res => {})
+				.then(async res => {
+					if (res) {
+						await this.$common.setStorage('token', res.token);
+						uni.redirectTo({
+							url: '/pages/family/index'
+						});
+					}
+				})
 				.catch(e => {
-					this.$toast(e.msg);
+					this.$common.toast(e.msg);
 				})
 				.finally(() => {
 					this.isSubmiting = false;
@@ -184,7 +194,7 @@ $text-color: #b6b6b6;
 .submit-login {
 	margin-top: 70rpx auto 50rpx;
 	color: white;
-		background-color: rgba(252, 44, 93, 1.0);
+	background-color: rgba(252, 44, 93, 1);
 
 	&:active {
 		background-color: rgba(252, 44, 93, 0.8);

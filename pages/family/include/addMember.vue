@@ -1,7 +1,7 @@
 <template>
 	<view class="">
 		<j-dialog :isShowDialog="isShowDialog" :isShowCancelBtn="true" :isMaskClose="false" @closeDialog="closeDialog" @confirmDialog="registerEvt">
-			<text slot="title"></text>
+			<text slot="title">添加家庭成员</text>
 			<view slot="content">
 				<view class="member-register">
 					<!-- 头部logo -->
@@ -88,19 +88,19 @@ export default {
 				userpwd = this.userpwd,
 				userConfirmPwd = this.userConfirmPwd;
 			if (!username.trim()) {
-				this.$toast('请输入账号');
+				this.$common.toast('请输入账号');
 				return;
 			}
 			if (!userpwd.trim()) {
-				this.$toast('请输入密码');
+				this.$common.toast('请输入密码');
 				return;
 			}
 			if (!userConfirmPwd.trim()) {
-				this.$toast('请输入确认密码');
+				this.$common.toast('请输入确认密码');
 				return;
 			}
 			if (userConfirmPwd.trim() !== userpwd.trim()) {
-				this.$toast('两次密码输入不一致');
+				this.$common.toast('两次密码输入不一致');
 				return;
 			}
 			const params = {
@@ -114,7 +114,7 @@ export default {
 			})
 				.then(res => {})
 				.catch(e => {
-					this.$toast(e.msg);
+					this.$common.toast(e.msg);
 				})
 				.finally(() => {
 					this.isSubmiting = false;
@@ -122,6 +122,10 @@ export default {
 		},
 
 		closeDialog() {
+			this.username = '';
+			this.userpwd = '';
+			this.userConfirmPwd = '';
+			this.pwdType = 'password';
 			this.$emit('closeDialog', false);
 		}
 	},

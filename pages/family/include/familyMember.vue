@@ -1,8 +1,13 @@
 <template>
 	<view class="member-wrap">
 		<view class="balance-wrap">
-			<view class="money-title">当前余额（元）</view>
+			<view class="money-title"><text>当前余额（元）</text></view>
 			<view class="money-count">100.00</view>
+			<view class="money-tip">
+				（账户金额由家庭成员充值，点此
+				<text class="login-member" @tap="loginMember">登录</text>
+				到家庭成员）
+			</view>
 		</view>
 
 		<view class="title flex member-title">
@@ -27,14 +32,21 @@ export default {
 	},
 	onLoad() {},
 	methods: {
+		// 账户管理
+		loginMember() {
+			uni.navigateTo({
+				url: '/pages/login/login'
+			});
+		},
+
 		// 添加家庭成员
 		addMember() {
-			this.$emit('toAddMember', true)
+			this.$emit('toAddMember', true);
 		},
-		
+
 		// 点击查看家庭成员信息
 		queryMember(data) {
-			this.$toast('点击查看家庭成员信息');
+			this.$common.toast('点击查看家庭成员信息');
 		}
 	}
 };
@@ -58,8 +70,11 @@ export default {
 
 	.balance-wrap {
 		padding: 30rpx 40rpx;
+		margin: 20rpx 20rpx;
 		// background: #00d18b;
 		background: #2dc478;
+		border-top-left-radius: 30rpx;
+		border-top-right-radius: 30rpx;
 		color: #fff;
 		.money-title {
 			font-size: 26rpx;
@@ -68,7 +83,14 @@ export default {
 		.money-count {
 			font-weight: bold;
 			font-size: 56rpx;
-			
+		}
+		.money-tip {
+			font-size: 24rpx;
+			.login-member {
+				color: orange;
+				text-decoration: underline;
+				margin: 0 6rpx;
+			}
 		}
 	}
 

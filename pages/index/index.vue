@@ -89,7 +89,7 @@
 						return res;
 					}
 				}).catch(e => {
-					this.$toast(e.msg);
+					this.$common.toast(e.msg);
 				}).finally(() => {
 				})
 			},
@@ -111,7 +111,7 @@
 						this.orderList = res.list.splice(0, num);
 					}
 				}).catch(e => {
-					this.$toast(e.msg);
+					this.$common.toast(e.msg);
 				}).finally()
 			},
 

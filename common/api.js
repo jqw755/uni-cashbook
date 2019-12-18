@@ -1,4 +1,5 @@
 import config from '@/common/config.js'
+import common from '@/common/common.js'
 
 /** 
  @param url: 接口地址
@@ -17,8 +18,11 @@ const api = ({
 }) => {
 
 	// 如果此接口需要token
-	if (notToken) {
-
+	if (!notToken) {
+		header = {
+			...header,
+			'Authorization': common.getStorage().token || ''
+		}
 	}
 
 	// 避免传参null/undefined
@@ -47,20 +51,28 @@ const api = ({
 			dataType: 'json',
 			header,
 			success(res) {
-				const {
-					code,
-					data,
-					msg
-				} = res.data;
-
-				if (code === 0 && data) {
-					resolve(data)
-				} else {
-					reject({
+				try{
+					const {
 						code,
+						data,
 						msg
+					} = res.data;
+					
+					if (code === 0 && data) {
+						resolve(data)
+					} else {
+						reject({
+							code,
+							msg
+						})
+					}
+				}catch(e){
+					reject({
+						code: -1,
+						msg: '请求出错，请稍后再试'
 					})
 				}
+			
 			},
 			fail(e) {
 				console.log(e)

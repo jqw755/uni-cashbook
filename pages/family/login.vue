@@ -55,11 +55,11 @@ export default {
 				userpwd = this.userpwd;
 
 			if (!username.trim()) {
-				this.$toast('请输入账号');
+				this.$common.toast('请输入账号');
 				return;
 			}
 			if (!userpwd.trim()) {
-				this.$toast('请输入密码');
+				this.$common.toast('请输入密码');
 				return;
 			}
 			const params = {
@@ -67,9 +67,9 @@ export default {
 				password: userpwd
 			};
 			this.$api({
-				url: '/test/login',
+				url: '/family/login',
 				data: params,
-				method: 'GET'
+				notToken: true
 			})
 				.then(res => {
 					// 重定向到家庭账户页面
@@ -90,11 +90,11 @@ export default {
 					// this.$router.push('/index');
 				})
 				.catch(e => {
-					this.$toast(e.msg);
+					this.$common.toast(e.msg);
 				});
 		},
 		findPwd() {
-			this.$toast('暂不支持自助找回密码');
+			this.$common.toast('暂不支持自助找回密码');
 			// uni.navigateTo({
 			// 	url: '/pages/findPwd/findPwd'
 			// })

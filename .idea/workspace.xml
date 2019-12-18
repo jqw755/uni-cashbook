@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77ea3987-c4f4-44ee-80b7-c10a14a799eb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/common/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/toast.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/component/dialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/component/dialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/family/include/addMember.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/family/include/addMember.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/family/include/familyMember.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/family/include/familyMember.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/family/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/family/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/family/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/family/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/family/register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/family/register.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/order/orderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/order/orderDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/order/orderList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/order/orderList.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,6 +29,15 @@
   <component name="FileEditorManager">
     <leaf />
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>$toast</find>
+      <find>showModal</find>
+    </findStrings>
+    <dirStrings>
+      <dir>D:\jingqw\uni-app\uni-cashbook\unpackage</dir>
+    </dirStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -28,12 +50,22 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/server/package.json" />
+        <option value="$PROJECT_DIR$/pages/family/include/familyMember.vue" />
+        <option value="$PROJECT_DIR$/pages/family/include/addMember.vue" />
+        <option value="$PROJECT_DIR$/pages/family/register.vue" />
+        <option value="$PROJECT_DIR$/pages/family/login.vue" />
+        <option value="$PROJECT_DIR$/pages/order/orderDetail.vue" />
+        <option value="$PROJECT_DIR$/pages/order/orderList.vue" />
+        <option value="$PROJECT_DIR$/pages/index/index.vue" />
+        <option value="$PROJECT_DIR$/pages/family/index.vue" />
+        <option value="$PROJECT_DIR$/pages/login/login.vue" />
+        <option value="$PROJECT_DIR$/common/common.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="198" />
-    <option name="y" value="82" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="342" />
+    <option name="y" value="30" />
     <option name="width" value="1476" />
     <option name="height" value="960" />
   </component>
@@ -42,6 +74,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -49,11 +82,20 @@
               <item name="uni-cashbook" type="b2602c69:ProjectViewProjectNode" />
               <item name="uni-cashbook" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="uni-cashbook" type="b2602c69:ProjectViewProjectNode" />
+              <item name="uni-cashbook" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="uni-cashbook" type="b2602c69:ProjectViewProjectNode" />
+              <item name="uni-cashbook" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -93,14 +135,15 @@
       <workItem from="1574824236963" duration="338000" />
       <workItem from="1575459971837" duration="66000" />
       <workItem from="1575873180424" duration="384000" />
+      <workItem from="1576574217773" duration="1107000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1508000" />
+    <option name="totallyTimeSpent" value="2615000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="198" y="82" width="1476" height="960" extended-state="0" />
+    <frame x="342" y="30" width="1476" height="960" extended-state="1" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17642957" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -135,10 +178,24 @@
     <entry file="file://$PROJECT_DIR$/component/bolang.svg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/package.json">
+    <entry file="file://$PROJECT_DIR$/server/package.json" />
+    <entry file="file://$PROJECT_DIR$/pages/login/login.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        <state relative-caret-position="216">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/crypto.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="59" column="18" lean-forward="true" selection-start-line="59" selection-start-column="18" selection-end-line="59" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#48#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

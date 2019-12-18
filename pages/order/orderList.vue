@@ -58,7 +58,7 @@
 						}
 					})
 					.catch(e => {
-						this.$toast(e.msg);
+						this.$common.toast(e.msg);
 					})
 					.finally(() => {});
 			}

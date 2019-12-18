@@ -119,7 +119,7 @@ export default {
 		max-width: 750px;
 		font-size: 26rpx;
 		background: #fff;
-		border-radius: 8rpx;
+		border-radius: 12rpx;
 		position: absolute;
 		top: 20%;
 		left: 12.5%;
@@ -134,7 +134,7 @@ export default {
 			text-align: center;
 			color: #000;
 			font-weight: 500;
-			padding: 44rpx 0 32rpx 0;
+			padding: 30rpx 0 32rpx 0;
 		}
 		.dialog-content {
 			padding: 0 36rpx;
@@ -148,11 +148,13 @@ export default {
 			font-size: 36rpx;
 			margin-top: 32rpx;
 			text-align: center;
+			
 			.btn {
 				flex: 1;
 				height: 100%;
 				text-align: center;
 				position: relative;
+				overflow: hidden;
 				&.current {
 					background: #f4f4f4;
 				}

@@ -53,8 +53,14 @@ export default {
 			isShowDialog: false // 是否显示添加成员dialog
 		};
 	},
-	onLoad() {},
+	onLoad() {
+		// const store = this.$common.getStorage();
+		// this.$common.setStorage('aaa','132465789');
+
+		this.getFamilyInfo();
+	},
 	methods: {
+		
 		// 滑动swiper
 		changeSwiper(e) {
 			this.currentTab = e.detail.current;
@@ -63,14 +69,32 @@ export default {
 		changeTab(id) {
 			this.currentTab = id;
 		},
+		
 		// 添加成员
 		addMember(e) {
 			this.isShowDialog = e;
 		},
+		
 		// 关闭添加成员dialog
 		closeDialog(e) {
 			this.isShowDialog = e;
-		}
+		},
+		
+		// 查询家庭信息
+		getFamilyInfo() {
+			this.$api({
+				url: '/family/info'
+			})
+				.then(res => {})
+				.catch(e => {
+					this.$common.showModal(e.msg || '');
+				})
+				.finally(() => {
+				});
+		},
+		
+		
+		
 	},
 	components: { addMember, familyMember, orderItem, emptyData }
 };
@@ -82,8 +106,7 @@ export default {
 	background: #f4f4f4;
 	.family-info-wrap {
 		width: 100%;
-		height: 440rpx;
-		box-shadow: 0 4rpx 10rpx 6rpx rgba(0, 0, 0, 0.1);
+		height: 420rpx;
 		overflow: hidden;
 		position: relative;
 		.family-info-bg {
@@ -123,12 +146,12 @@ export default {
 	.fun-wrap {
 		.fun-tab-wrap {
 			background: #fff;
-			margin-bottom: 20rpx;
+			margin-bottom: 30rpx;
 			.tab-item {
 				text-align: center;
 				flex-basis: 100rpx;
-				height: 60rpx;
-				line-height: 60rpx;
+				height: 80rpx;
+				line-height: 80rpx;
 				color: gray;
 				font-size: 26rpx;
 				position: relative;
@@ -150,7 +173,7 @@ export default {
 		}
 
 		.swiper-wrap {
-			min-height: calc(100vh - 520rpx);
+			min-height: calc(100vh - 530rpx);
 			// padding: 0 40rpx;
 			background: #fff;
 			.no-order-wrap {
