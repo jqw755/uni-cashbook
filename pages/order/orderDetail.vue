@@ -6,40 +6,42 @@
 		<view class="order-detail-wrap">
 			<view class="order-detail-top text-center">
 				<view class="detail-top-item"><image src="../../static/cate/canyin.png" mode="" class="order-icon-wrap"></image></view>
-				<view class="detail-top-item order-title">餐饮</view>
-				<view class="detail-top-item order-money">-10.00</view>
+				<view class="detail-top-item order-title">{{ orderData.cateStr || '--' }}</view>
+				<view class="detail-top-item order-money">
+					<text v-if="orderData.orderType === 1">-</text>
+					<text v-if="orderData.orderType === 2">+</text>
+					<text class="money-num">{{ orderData.money }}</text>
+				</view>
 			</view>
 
 			<ul class="order-detail-bottom">
 				<li class="detail-item">
 					<text class="detail-tip">当前状态</text>
-					<text>支付成功</text>
+					<text>{{ orderData.orderState || '--' }}</text>
 				</li>
 				<li class="detail-item">
 					<text class="detail-tip">账单备注</text>
-					<text>我10号吃饭了，11号记账的</text>
+					<text>{{ orderData.remark || '--' }}</text>
 				</li>
 				<li class="detail-item">
 					<text class="detail-tip">支付方式</text>
-					<text>支付宝余额付款</text>
+					<text>{{ orderData.payType }}</text>
 				</li>
 				<li class="detail-item">
 					<text class="detail-tip">消费时间</text>
-					<text>2019-11-10 12：00</text>
+					<text>{{ orderData.payTime || '--' }}</text>
 				</li>
 				<li class="detail-item">
 					<text class="detail-tip">创建时间</text>
-					<text>2019-11-11 20：02</text>
+					<text>{{ orderData.createTime || '--' }}</text>
 				</li>
 				<li class="detail-item">
 					<text class="detail-tip">订单号</text>
-					<text>12021454576946513203</text>
+					<text>{{ orderData.orderNo || '--' }}</text>
 				</li>
 				<li class="detail-item">
 					<text class="detail-tip">照片</text>
-					<view class="order-pics">
-						<!-- <image src="../../static/cate/canyin.png" mode="" class="order-pic-item"></image> -->
-					</view>
+					<view class="order-pics"><!-- <image src="../../static/cate/canyin.png" mode="" class="order-pic-item"></image> --></view>
 				</li>
 			</ul>
 		</view>
@@ -47,27 +49,37 @@
 </template>
 
 <script>
-	export default {
+import utils from '@/common/utils.js';
+
+export default {
 	data() {
-		return {};
+		return {
+			orderNo: '',
+			orderData: {}
+		};
 	},
 
-	onLoad() {},
+	onLoad(options) {
+		this.orderNo = options.orderNo;
+
+		this.getOrderDetail();
+	},
 
 	onReady() {},
 
 	methods: {
-		getOrderList(page = this.page) {
+		getOrderDetail(page = this.page) {
 			this.$api({
-				url: '/order/list',
+				url: '/order/detail',
 				data: {
-					page,
-					pageSize: this.pageSize
+					orderNo: this.orderNo
 				}
 			})
 				.then(res => {
-					if (res.list) {
-						this.orderList = res.list;
+					if (res) {
+						res.createTime = res.createTime ? utils.formatDate(res.createTime, 'yyyy-MM-dd hh:mm:ss') : '--';
+						res.payTime = res.payTime ? utils.formatDate(res.payTime, 'yyyy-MM-dd hh:mm:ss') : '--';
+						this.orderData = res;
 					}
 				})
 				.catch(e => {
@@ -75,6 +87,12 @@
 				})
 				.finally();
 		}
+	},
+	
+	// 下拉刷新
+	async onPullDownRefresh() {
+		this.getOrderDetail();
+		uni.startPullDownRefresh();
 	},
 
 	components: {}
@@ -84,7 +102,7 @@
 <style lang="scss">
 .order-detail-wrap {
 	.order-detail-top {
-		padding: 32rpx 64rpx 50rpx;
+		padding: 60rpx 64rpx 50rpx;
 		margin-bottom: 16rpx;
 		background: #fff;
 		.detail-top-item {
@@ -122,7 +140,7 @@
 				color: #808080;
 			}
 			.order-pics {
-				.order-pic-item{
+				.order-pic-item {
 					max-width: 140rpx;
 					max-height: 140rpx;
 					margin: 0 10rpx 10rpx 0;

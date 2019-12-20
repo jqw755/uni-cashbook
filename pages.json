@@ -39,7 +39,9 @@
 			}
 		}, {
 			"path": "pages/order/orderDetail",
-			"style": {}
+			"style": {
+				"enablePullDownRefresh": true
+			}
 		}
 	],
 	"globalStyle": {

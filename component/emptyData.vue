@@ -29,7 +29,7 @@ export default {
 	font-size: 30rpx;
 	color: #999999;
 	text-align: center;
-	background: #fff;
+	// background: #fff;
 	.no-data-img {
 		width: 200rpx;
 		height: 200rpx;

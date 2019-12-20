@@ -2,10 +2,10 @@
 	<view class="member-wrap">
 		<view class="balance-wrap">
 			<view class="money-title"><text>当前余额（元）</text></view>
-			<view class="money-count">100.00</view>
+			<view class="money-count">{{familyData.balance}}</view>
 			<view class="money-tip">
 				（账户金额由家庭成员充值，点此
-				<text class="login-member" @tap="loginMember">登录</text>
+				<text class="login-member" @tap="loginMember">切换</text>
 				到家庭成员）
 			</view>
 		</view>
@@ -17,16 +17,33 @@
 		</view>
 		<view class="member-list flex">
 			<!-- 成员itme -->
-			<view v-for="(item, index) in 6" :key="index" class="member-item text-center" @tap="queryMember(item)">
-				<view class="member-avatar-wrap"><image src="/static/contact-avatar.png" mode="widthFix" class="member-avatar"></image></view>
-				<view class="member-name text-overflow">成员名字</view>
+			<view v-for="(item, index) in familyData.members" :key="index" class="member-item text-center" @tap="queryMember(item)">
+				<view class="member-avatar-wrap">
+					<image :src="item.avatar" mode="widthFix" class="member-avatar" v-if="item.avatar"></image>
+					<image src="/static/contact-avatar.png" mode="widthFix" class="member-avatar" v-else></image>
+					</view>
+				<view class="member-name text-overflow">{{item.userName}}</view>
 			</view>
+
+
+
 		</view>
+
+		<view class="no-member-wrap" v-if="!familyData.members||!familyData.members.length"><empty-data noDataDesc="暂无成员" /></view>
+
 	</view>
 </template>
 
 <script>
 export default {
+	props: {
+		familyData: {
+			type: Object,
+			default() {
+				return {};
+			}
+		}
+	},
 	data() {
 		return {};
 	},
@@ -48,7 +65,8 @@ export default {
 		queryMember(data) {
 			this.$common.toast('点击查看家庭成员信息');
 		}
-	}
+	},
+	components:{ }
 };
 </script>
 

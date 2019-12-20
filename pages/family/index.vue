@@ -4,8 +4,9 @@
 		<view class="family-info-wrap flex flex-align flex-justify">
 			<image src="/static/family/default-head-bg.jpg" mode="aspectFill" class="family-info-bg"></image>
 			<view class="family-head-wrap flex flex-align flex-justify">
-				<image src="/static/family/family-logo.png" mode="" class="family-head"></image>
-				<view class="family-name">家庭昵称</view>
+				<image :src="familyData.familyAvatar" mode="" class="family-head" v-if="familyData.familyAvatar"></image>
+				<image src="/static/family/family-logo.png" mode="" class="family-head" v-else></image>
+				<view class="family-name">{{familyData.familyName||'--'}}</view>
 				<view class="family-tags">吃货家庭，开心，美食</view>
 			</view>
 		</view>
@@ -18,22 +19,24 @@
 			</view>
 
 			<swiper class="swiper-wrap" :current="currentTab" @change="changeSwiper" duration="300">
-				<swiper-item class="swiper-item"><family-member @toAddMember="addMember" /></swiper-item>
+				<swiper-item class="swiper-item">
+					<family-member @toAddMember="addMember" :familyData="familyData"/>
+				</swiper-item>
 
 				<swiper-item class="swiper-item">
 					<order-item v-for="(item, index) in orderList" :key="index" :order-data="item" />
 
-					<view class="no-order-wrap" v-if="!orderList.length"><emptyData noDataDesc="暂无订单" /></view>
+					<view class="no-order-wrap" v-if="!orderList.length"><empty-data noDataDesc="暂无订单" /></view>
 				</swiper-item>
 
 				<swiper-item class="swiper-item">
-					<view class="no-order-wrap" v-if="!photos.length"><emptyData noDataDesc="暂无相册" /></view>
+					<view class="no-order-wrap" v-if="!photos.length"><empty-data noDataDesc="暂无相册" /></view>
 				</swiper-item>
 			</swiper>
 		</view>
 
 		<!-- 添加成员diolog -->
-		<add-member :isShowDialog="isShowDialog" @closeDialog="closeDialog"></add-member>
+		<add-member :isShowDialog="isShowDialog" @closeDialog="closeDialog" @addMemberSuccess="addMemberSuccess"></add-member>
 	</view>
 </template>
 
@@ -41,10 +44,11 @@
 import addMember from './include/addMember.vue';
 import familyMember from './include/familyMember.vue';
 import orderItem from '../order/orderItem.vue';
-import emptyData from '@/component/emptyData.vue';
 export default {
 	data() {
 		return {
+			familyData:{},
+			
 			currentTab: 0,
 			tabList: [{ id: 0, name: '家庭' }, { id: 1, name: '订单' }, { id: 2, name: '相册' }],
 			orderList: [],
@@ -54,10 +58,8 @@ export default {
 		};
 	},
 	onLoad() {
-		// const store = this.$common.getStorage();
-		// this.$common.setStorage('aaa','132465789');
-
 		this.getFamilyInfo();
+	
 	},
 	methods: {
 		
@@ -80,12 +82,23 @@ export default {
 			this.isShowDialog = e;
 		},
 		
+		// 添加成功
+		addMemberSuccess(){
+			this.closeDialog();
+			this.getFamilyInfo();
+		},
+		
 		// 查询家庭信息
 		getFamilyInfo() {
 			this.$api({
 				url: '/family/info'
 			})
-				.then(res => {})
+				.then(res => {
+					if(res){
+						res.balance = res.balance || res.balance === 0 ? res.balance.toFixed(2) : '--';
+						this.familyData = res;
+					}
+				})
 				.catch(e => {
 					this.$common.showModal(e.msg || '');
 				})
@@ -96,7 +109,7 @@ export default {
 		
 		
 	},
-	components: { addMember, familyMember, orderItem, emptyData }
+	components: { addMember, familyMember, orderItem }
 };
 </script>
 

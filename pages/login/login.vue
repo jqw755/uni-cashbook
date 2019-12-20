@@ -71,18 +71,18 @@ export default {
 				data: params,
 				notToken: true
 			})
-				.then(res => {
-					// res = res.data;
-					// res.userInfo.avatar = `${getConfig().serverUrl}${res.userInfo.avatar}`;
-					// res.child ? res.child.avatar = `${getConfig().serverUrl}${res.child.avatar}` : '';
-					// auth.setIsLogin(1);
-					// // auth.setToken(res.token);
-					// // auth.setFamilyUserInfo(res.userInfo);
-					// auth.setFamilyUserInfo(res.userInfo);
-					// res.child ? auth.setPersonUserInfo(res.child) : '';
-					// auth.setToken(res.userInfo.id); //存家庭ID
-					// auth.setCon(params.con);
-					// this.$router.push('/index');
+				.then(async res => {
+					if (res) {
+						await this.$common.setStorage('token', res.token);
+						await this.$common.setStorage('familyId', res.familyId);
+						this.$store.commit('SETTOKEN', res.token);
+						this.$store.commit('SETFAMILYID', res.familyId);
+						// 重定向到成员页面
+						uni.switchTab({
+							url: '/pages/index/index'
+						});
+					}
+	
 				})
 				.catch(e => {
 					this.$common.toast(e.msg);

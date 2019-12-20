@@ -1,6 +1,6 @@
 import CryptoJS from '@/lib/crypto-js.min.js'
 
-const key = 'cashbook'; //十六位十六进制数作为密钥
+const key = 'cashbookApp'; //十六位十六进制数作为密钥
 
 /**
  * 加密

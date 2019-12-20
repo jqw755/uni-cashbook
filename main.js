@@ -6,12 +6,14 @@ import api from '@/common/api.js'
 import common from '@/common/common.js'
 
 import navbar from '@/component/navbar.vue'
+import emptyData from '@/component/emptyData.vue'
 
 Vue.prototype.$store = store;
 Vue.prototype.$api = api;
 Vue.prototype.$common = common;
 
 Vue.component('navbar', navbar); // 全局注册自定义导航栏
+Vue.component('empty-data', emptyData); // 全局注册自定义导航栏
 
 Vue.config.productionTip = false
 

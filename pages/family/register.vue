@@ -99,6 +99,7 @@ export default {
 			})
 				.then(async res => {
 					if (res) {
+						this.$store.commit('SETTOKEN', res.token);
 						await this.$common.setStorage('token', res.token);
 						uni.redirectTo({
 							url: '/pages/family/index'

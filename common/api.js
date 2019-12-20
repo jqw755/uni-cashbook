@@ -51,13 +51,37 @@ const api = ({
 			dataType: 'json',
 			header,
 			success(res) {
-				try{
+				try {
 					const {
 						code,
 						data,
 						msg
 					} = res.data;
-					
+
+					// 登录失效
+					if (code === 20 || code === 21) {
+						let url = '';
+						if (store.state.familyId) {
+							url = '/pages/login/login'
+						} else {
+							url = '/pages/family/login'
+						}
+						uni.showModal({
+							content: '登录失效,请重新登录',
+							success() {
+								uni.navigateTo({
+									url
+								})
+							}
+						})
+						reject({
+							code,
+							msg
+						});
+						return
+					}
+
+					// 请求成功
 					if (code === 0 && data) {
 						resolve(data)
 					} else {
@@ -66,13 +90,14 @@ const api = ({
 							msg
 						})
 					}
-				}catch(e){
+					
+				} catch (e) {
 					reject({
 						code: -1,
 						msg: '请求出错，请稍后再试'
 					})
 				}
-			
+
 			},
 			fail(e) {
 				console.log(e)

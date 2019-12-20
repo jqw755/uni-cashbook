@@ -2,20 +2,23 @@
 	<view class="page_login">
 		<!-- 头部logo -->
 		<view class="head-wrap flex flex-align flex-justify">
-			<view class="head-bg flex flex-justify"><image src="/static/login/family-logo.png" class="head-logo" /></view>
+			<view class="head-bg flex flex-justify"><image src="/static/family/family-logo.png" class="head-logo" /></view>
 		</view>
 		<!-- 登录form -->
 		<view class="login_form flex flex-align flex-justify">
 			<view class="input-wrap flex flex-align flex-justify">
 				<view class="img"><image style="width:22px;height: 22px;" src="/static/login/icon_user.png" /></view>
-				<input type="text" v-model="username" placeholder="请输入家庭账号" />
+				<input type="text" v-model="familyName" placeholder="请输入家庭账号" />
 				<view class="img"><image @tap="delUser" class="img_del" src="/static/login/clear-ipt.png" /></view>
 			</view>
 			<view class="line" />
 			<view class="input-wrap flex flex-align flex-justify">
 				<view class="img"><image style="width:18px;height: 22px;" src="/static/login/icon_pwd.png" /></view>
 				<input :type="pwdType" :value="userpwd" @input="inputPwd" placeholder="请输入家庭密码" />
-				<view class="img" @tap="switchPwd"><image class="img_pwd_switch" src="/static/login/close-pwd.png" /></view>
+				<view class="img" @tap="switchPwd">
+					<image class="img_pwd_switch" v-show="pwdType === 'password'" src="/static/login/close-pwd.png" />
+					<image class="img_pwd_switch" v-show="pwdType === 'text'" src="/static/login/open-pwd.png" />
+				</view>
 			</view>
 		</view>
 
@@ -32,29 +35,29 @@
 export default {
 	data() {
 		return {
-			username: '',
+			familyName: '',
 			userpwd: '',
 			pwdType: 'password'
 		};
 	},
 	methods: {
 		inputUsername(e) {
-			this.username = e.target.value;
+			this.familyName = e.target.value;
 		},
 		inputPwd(e) {
 			this.userpwd = e.target.value;
 		},
 		delUser() {
-			this.username = '';
+			this.familyName = '';
 		},
 		switchPwd() {
 			this.pwdType = this.pwdType === 'text' ? 'password' : 'text';
 		},
 		login() {
-			const username = this.username,
+			const familyName = this.familyName,
 				userpwd = this.userpwd;
 
-			if (!username.trim()) {
+			if (!familyName.trim()) {
 				this.$common.toast('请输入账号');
 				return;
 			}
@@ -63,7 +66,7 @@ export default {
 				return;
 			}
 			const params = {
-				userName: username,
+				familyName: familyName,
 				password: userpwd
 			};
 			this.$api({
@@ -71,23 +74,16 @@ export default {
 				data: params,
 				notToken: true
 			})
-				.then(res => {
-					// 重定向到家庭账户页面
-					uni.redirectTo({
-						url: '/pages/family/index'
-					});
+				.then(async res => {
+					if(res){
+					  this.$store.commit('SETTOKEN', res.token);
+						await this.$common.setStorage('token', res.token);
+						// 重定向到家庭账户页面
+						uni.redirectTo({
+							url: '/pages/family/index'
+						});
+					}
 
-					// res = res.data;
-					// res.userInfo.avatar = `${getConfig().serverUrl}${res.userInfo.avatar}`;
-					// res.child ? res.child.avatar = `${getConfig().serverUrl}${res.child.avatar}` : '';
-					// auth.setIsLogin(1);
-					// // auth.setToken(res.token);
-					// // auth.setFamilyUserInfo(res.userInfo);
-					// auth.setFamilyUserInfo(res.userInfo);
-					// res.child ? auth.setPersonUserInfo(res.child) : '';
-					// auth.setToken(res.userInfo.id); //存家庭ID
-					// auth.setCon(params.con);
-					// this.$router.push('/index');
 				})
 				.catch(e => {
 					this.$common.toast(e.msg);
