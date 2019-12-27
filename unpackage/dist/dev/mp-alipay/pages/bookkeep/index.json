@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "navbar": "/component/navbar",
+    "income": "/component/income",
+    "expenditure": "/component/expenditure",
+    "date-time-picker": "/component/datetime-picker"
+  }
+}

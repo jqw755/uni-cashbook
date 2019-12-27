@@ -1,5 +1,8 @@
 <template>
 	<view class="page_register">
+		<!-- 导航栏 -->
+		<navbar v-if="isShowNavBar" />
+
 		<!-- 头部logo -->
 		<view class="head-wrap flex ">创建您的家庭吧</view>
 
@@ -22,7 +25,6 @@
 
 			<view class="line" />
 
-			<view class="input-wrap flex flex-align flex-justify"><input type="password" :value="userConfirmPwd" @input="inputConfirmPwd" placeholder="请再次输入密码" /></view>
 		</view>
 
 		<!-- 登录按钮 -->
@@ -35,15 +37,20 @@
 export default {
 	data() {
 		return {
+			isShowNavBar: false, // 是否需要导航栏
+
 			familyAvatar: '',
 			familyName: '',
 			password: '',
-			userConfirmPwd: '',
 			pwdType: 'password',
 			isSubmiting: false
 		};
 	},
-	onLoad() {},
+	onLoad() {
+		var pages = getCurrentPages();
+		this.isShowNavBar = pages.length > 1;
+
+	},
 	methods: {
 		// 输入账户
 		inputUsername(e) {
@@ -53,10 +60,7 @@ export default {
 		inputPwd(e) {
 			this.password = e.target.value;
 		},
-		// 确认密码
-		inputConfirmPwd(e) {
-			this.userConfirmPwd = e.target.value;
-		},
+
 		// 清空账户
 		delUser() {
 			this.familyName = '';
@@ -68,8 +72,7 @@ export default {
 		// 注册
 		registerEvt() {
 			const familyName = this.familyName,
-				password = this.password,
-				userConfirmPwd = this.userConfirmPwd;
+				password = this.password;
 
 			if (!familyName.trim()) {
 				this.$common.toast('请输入账号');
@@ -79,14 +82,7 @@ export default {
 				this.$common.toast('请输入密码');
 				return;
 			}
-			if (!userConfirmPwd.trim()) {
-				this.$common.toast('请输入确认密码');
-				return;
-			}
-			if (userConfirmPwd.trim() !== password.trim()) {
-				this.$common.toast('两次密码输入不一致');
-				return;
-			}
+
 			const params = {
 				familyName,
 				password: password

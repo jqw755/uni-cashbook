@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "empty-data": "/component/emptyData",
+    "j-swiper": "/component/jSwiper"
+  }
+}

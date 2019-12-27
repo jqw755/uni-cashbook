@@ -11,7 +11,7 @@
 				<view class="balance-wrap text-center">
 					<view class="balance-content ">
 						<text class="money-tip">￥</text>
-						<text class="money-num">{{ balance }}</text>
+						<text class="money-num">{{ $store.state.userInfo.balance }}</text>
 					</view>
 
 					<view class="balance-tip ">
@@ -46,6 +46,11 @@
 				<view class="index-page-no-data" v-if="!orderList.length"><empty-data noDataDesc="暂无订单" /></view>
 			</view>
 		</view>
+
+		<!-- 记账悬浮按钮 -->
+		<view @tap="bookkeepEvt" :class="['bookkeep-btn-wrap flex flex-align flex-justify', { 'pull-over': isPageScroll }]">
+			<image src="/static/bookkeeping.png" class="bookkeep-img"></image>
+		</view>
 	</view>
 </template>
 
@@ -58,44 +63,45 @@ export default {
 	data() {
 		return {
 			familyId: '',
-			balance: '',
-			orderList: []
+			orderList: [],
+			isPageScroll: false, // 页面是否在滚动
+			timer: null
 		};
 	},
 
-  async onLoad() {
-		const {familyId} = this.$store.state;
+	onLoad() {
+		const { familyId } = this.$store.state.userInfo;
 		this.familyId = familyId;
-		
-		this.getBalance();
+
 		this.getOrderList();
+	},
+
+	onShow() {
+		if (this.$store.state.bookkeepingSuccess) {
+			this.getOrderList();
+			this.$store.commit('SETBOOKKEEPING', false);
+		}
+	},
+
+	onPageScroll() {
+		this.isPageScroll = true;
+
+		if (this.timer) {
+			clearTimeout(this.timer);
+		}
+		// 停止滚动2s后出现
+		this.timer = setTimeout(() => {
+			this.isPageScroll = false;
+		}, 2000);
 	},
 
 	// 下拉刷新
 	async onPullDownRefresh() {
-		this.getBalance();
 		this.getOrderList();
-		uni.startPullDownRefresh();
+		uni.stopPullDownRefresh();
 	},
 
 	methods: {
-		// 获取最新余额
-		getBalance() {
-			this.$api({
-				url: '/family/info',
-				data:{familyId: this.familyId}
-			})
-				.then(res => {
-					if (res) {
-						this.balance = res.balance;
-					}
-				})
-				.catch(e => {
-					this.$common.toast(e.msg);
-				})
-				.finally(() => {});
-		},
-
 		getOrderList() {
 			this.$api({
 				url: '/order/list',
@@ -113,6 +119,19 @@ export default {
 					this.$common.toast(e.msg);
 				})
 				.finally();
+		},
+
+		// 点击记账按钮
+		bookkeepEvt() {
+			// 如果按钮靠边隐藏了，点击让他出来
+			if (this.isPageScroll) {
+				this.isPageScroll = false;
+				return;
+			}
+
+			uni.navigateTo({
+				url: '/pages/bookkeep/index'
+			});
 		}
 	},
 
@@ -169,7 +188,7 @@ export default {
 		}
 	}
 
-	.no-bolang-view{
+	.no-bolang-view {
 		width: 100%;
 		height: 100%;
 		background-image: linear-gradient(200deg, #007851, #14a032);
@@ -191,17 +210,34 @@ export default {
 			font-size: 40rpx;
 			color: #000;
 		}
-	
+
 		.more-order-title {
 			align-self: flex-end;
 			color: #666;
 		}
 	}
-	
-	
-	.index-page-no-data{
+
+	.index-page-no-data {
 		margin-top: 150rpx;
 	}
-	
+}
+
+.bookkeep-btn-wrap {
+	width: 90rpx;
+	height: 90rpx;
+	background: $uni-color-primary;
+	border-radius: 200rpx;
+	position: fixed;
+	right: 32rpx;
+	bottom: 160rpx;
+	box-shadow: 0 0 6rpx 4rpx rgba(0, 0, 0, 0.1);
+	transition: transform 300ms ease;
+	.bookkeep-img {
+		width: 44rpx;
+		height: 44rpx;
+	}
+	&.pull-over {
+		transform: translateX(90rpx);
+	}
 }
 </style>

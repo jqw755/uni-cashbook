@@ -4,11 +4,6 @@
 			<text slot="title">修改密码</text>
 			<view slot="content">
 				<view class="member-register">
-					<!-- avatar-->
-					<view class="head-bg flex flex-justify">
-						<image :src="userAvatar" class="head-logo" v-if="userAvatar"/>
-						<image src="/static/login/head.png" class="head-logo" v-else/>
-				  </view>
 
 					<!-- form -->
 					<view class="login_form flex flex-align flex-justify">
@@ -44,14 +39,6 @@
 import jDialog from '@/component/dialog.vue';
 export default {
 	props: {
-		// 头像
-		userAvatar: {
-			type: String,
-			required: false,
-			default() {
-				return '';
-			}
-		},
 		
 		// 是否显示弹窗
 		isShowDialog: {
@@ -149,20 +136,6 @@ export default {
 $form-border-color: rgba(214, 214, 214, 1);
 $text-color: #b6b6b6;
 .member-register {
-	.head-bg {
-		border-radius: 50%;
-		width: 140rpx;
-		height: 140rpx;
-		background: #fc2c5d;
-		align-items: flex-end;
-		overflow: hidden;
-		margin: 0 auto;
-
-		.head-logo {
-			width: 88rpx;
-			height: 99rpx;
-		}
-	}
 
 	.login_form {
 		margin: 40rpx auto;

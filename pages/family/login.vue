@@ -1,5 +1,8 @@
 <template>
 	<view class="page_login">
+		<!-- 导航栏 -->
+		<navbar v-if="isShowNavBar" />
+
 		<!-- 头部logo -->
 		<view class="head-wrap flex flex-align flex-justify">
 			<view class="head-bg flex flex-justify"><image src="/static/family/family-logo.png" class="head-logo" /></view>
@@ -35,11 +38,19 @@
 export default {
 	data() {
 		return {
+			isShowNavBar: false, // 是否需要导航栏
 			familyName: '',
 			userpwd: '',
 			pwdType: 'password'
 		};
 	},
+
+	onLoad() {
+		var pages = getCurrentPages();
+		this.isShowNavBar = pages.length > 1;
+
+	},
+
 	methods: {
 		inputUsername(e) {
 			this.familyName = e.target.value;
@@ -77,7 +88,9 @@ export default {
 				.then(async res => {
 					if(res){
 					  this.$store.commit('SETTOKEN', res.token);
+					  this.$store.commit('SETUSERINFO', res);
 						await this.$common.setStorage('token', res.token);
+						await this.$common.setStorage('userInfo', res);
 						// 重定向到家庭账户页面
 						uni.redirectTo({
 							url: '/pages/family/index'
@@ -103,17 +116,18 @@ export default {
 	}
 };
 </script>
-<style>
+
+<style lang="scss">
+
+$logo-padding: 60px;
+$form-border-color: rgba(214, 214, 214, 1);
+$text-color: #b6b6b6;
+
 page {
 	height: auto;
 	min-height: 100%;
 	background-color: #f5f6f8;
 }
-</style>
-<style lang="scss">
-$logo-padding: 60px;
-$form-border-color: rgba(214, 214, 214, 1);
-$text-color: #b6b6b6;
 
 .page_login {
 	padding: 72rpx 72rpx;

@@ -4,6 +4,9 @@
 		<view class="family-info-wrap flex flex-align flex-justify">
 			<image src="/static/family/default-head-bg.jpg" mode="aspectFill" class="family-info-bg"></image>
 			<view class="family-head-wrap flex flex-align flex-justify">
+				
+				<navigator url="/pages/family/set" class="set-btn">设置</navigator>
+				
 				<image :src="familyData.familyAvatar" mode="" class="family-head" v-if="familyData.familyAvatar"></image>
 				<image src="/static/family/family-logo.png" mode="" class="family-head" v-else></image>
 				<view class="family-name">{{familyData.familyName||'--'}}</view>
@@ -17,22 +20,24 @@
 			<view class="fun-tab-wrap flex flex-align flex-justify">
 				<text :class="['tab-item', { active: item.id === currentTab }]" v-for="(item, index) in tabList" :key="index" @tap="changeTab(item.id)">{{ item.name }}</text>
 			</view>
-
-			<swiper class="swiper-wrap" :current="currentTab" @change="changeSwiper" duration="300">
-				<swiper-item class="swiper-item">
+		
+			<j-swiper :swiperLen="3" @swiperChange="changeSwiper" :swiperIdx="currentTab">
+				<view class="j-swiper-item">
 					<family-member @toAddMember="addMember" :familyData="familyData"/>
-				</swiper-item>
-
-				<swiper-item class="swiper-item">
+				</view>
+				
+				<view class="j-swiper-item">
 					<order-item v-for="(item, index) in orderList" :key="index" :order-data="item" />
-
-					<view class="no-order-wrap" v-if="!orderList.length"><empty-data noDataDesc="暂无订单" /></view>
-				</swiper-item>
-
-				<swiper-item class="swiper-item">
-					<view class="no-order-wrap" v-if="!photos.length"><empty-data noDataDesc="暂无相册" /></view>
-				</swiper-item>
-			</swiper>
+				
+					<empty-data noDataDesc="暂无订单" v-if="!orderList.length" />
+				</view>
+				
+				<view class="j-swiper-item">
+					<empty-data noDataDesc="暂无相册" v-if="!photos.length" />
+				</view>
+			</j-swiper>
+		
+		
 		</view>
 
 		<!-- 添加成员diolog -->
@@ -41,6 +46,7 @@
 </template>
 
 <script>
+	import jSwiper from '@/component/jSwiper.vue';
 import addMember from './include/addMember.vue';
 import familyMember from './include/familyMember.vue';
 import orderItem from '../order/orderItem.vue';
@@ -62,10 +68,9 @@ export default {
 	
 	},
 	methods: {
-		
 		// 滑动swiper
 		changeSwiper(e) {
-			this.currentTab = e.detail.current;
+			this.currentTab = e;
 		},
 		// 点击tab
 		changeTab(id) {
@@ -109,7 +114,7 @@ export default {
 		
 		
 	},
-	components: { addMember, familyMember, orderItem }
+	components: { jSwiper, addMember, familyMember, orderItem }
 };
 </script>
 
@@ -131,9 +136,20 @@ export default {
 			z-index: 1;
 		}
 		.family-head-wrap {
+			width: 100%;
+			height: 100%;
 			position: relative;
 			flex-direction: column;
 			z-index: 2;
+			background: rgba(0, 0, 0, .22);
+			.set-btn{
+				color: #ddd;
+				font-size: 24rpx;
+				position: absolute;
+				right: 32rpx;
+				top: 20rpx;
+			}
+			
 			.family-head {
 				width: 140rpx;
 				max-height: 140rpx;
@@ -157,6 +173,11 @@ export default {
 	}
 
 	.fun-wrap {
+		.j-swiper-item{
+			min-height: calc(100vh - 530rpx);
+			background: #fff;
+		}
+		
 		.fun-tab-wrap {
 			background: #fff;
 			margin-bottom: 30rpx;
@@ -182,15 +203,6 @@ export default {
 						bottom: 0;
 					}
 				}
-			}
-		}
-
-		.swiper-wrap {
-			min-height: calc(100vh - 530rpx);
-			// padding: 0 40rpx;
-			background: #fff;
-			.no-order-wrap {
-				margin-top: 100rpx;
 			}
 		}
 

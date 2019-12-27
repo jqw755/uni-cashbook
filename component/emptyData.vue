@@ -26,6 +26,7 @@ export default {
 
 <style lang="scss">
 .no-data-wrap {
+	margin-top: 150rpx;
 	font-size: 30rpx;
 	color: #999999;
 	text-align: center;

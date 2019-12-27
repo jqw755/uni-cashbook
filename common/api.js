@@ -1,7 +1,8 @@
 import config from '@/common/config.js'
 import common from '@/common/common.js'
+import store from '@/store/index.js'
 
-/** 
+/**
  @param url: 接口地址
  @param data: 请求参数(可选)
  @param header: 请求头(可选)
@@ -48,7 +49,6 @@ const api = ({
 			url: config.getConfig().baseUrl + url,
 			method,
 			data,
-			dataType: 'json',
 			header,
 			success(res) {
 				try {
@@ -61,23 +61,23 @@ const api = ({
 					// 登录失效
 					if (code === 20 || code === 21) {
 						let url = '';
-						if (store.state.familyId) {
+						if (store.state.userInfo.familyId) {
 							url = '/pages/login/login'
 						} else {
 							url = '/pages/family/login'
 						}
+
 						uni.showModal({
+							title: '提示',
 							content: '登录失效,请重新登录',
-							success() {
+							showCancel: false,
+							success (res) {
 								uni.navigateTo({
 									url
 								})
 							}
-						})
-						reject({
-							code,
-							msg
 						});
+
 						return
 					}
 
@@ -90,8 +90,9 @@ const api = ({
 							msg
 						})
 					}
-					
+
 				} catch (e) {
+					console.log(e)
 					reject({
 						code: -1,
 						msg: '请求出错，请稍后再试'
@@ -103,7 +104,7 @@ const api = ({
 				console.log(e)
 				const msg = "服务出错，请稍后再试"; // 错误提示
 				reject({
-					code: -999,
+					code: -1,
 					msg: e.errMsg || msg
 				});
 			},

@@ -1,26 +1,33 @@
 <template>
-	<view class="family-container">
-		<!-- 头像 昵称等信息 -->
-		<view class="family-info-wrap flex flex-align flex-justify">
-			<image src="/static/default-user-head-bg.jpg" mode="aspectFill" class="family-info-bg"></image>
-			<view class="family-head-wrap flex">
-				<!-- 左侧信息 -->
-				<view class="left-info">
-					<view class="greet-tip">Hi，{{ greetings }}</view>
-					<view class="user-name">{{ userData.userName || '--' }}</view>
+	<view class="user-container">
+		<view class="user-info-wrap flex flex-align flex-justify">
+			<!-- 顶部信息背景图 -->
+			<image src="/static/default-user-head-bg.jpg" mode="aspectFill" class="user-info-bg"></image>
+
+			<!-- 顶部信息 -->
+			<view class="user-head-wrap">
+				<!-- 家庭头像、昵称 -->
+				<view class="top-info flex flex-align">
+					<view class="family-info flex flex-align">
+						<text>来自</text>
+						<image :src="userData.familyAvatar" mode="" class="family-avatar" v-if="userData.familyAvatar"></image>
+						<image src="/static/family/home.png" mode="" class="family-avatar" v-else></image>
+						<text>{{ userData.familyName || '--' }}</text>
+					</view>
+
+					<navigator url="/pages/my/set" class="set-btn">设置</navigator>
 				</view>
-				<!-- 右侧头像 -->
-				<view class="right-info text-center">
+
+				<!-- 问候语 -->
+				<view class="greet-tip">{{ greetings }}</view>
+
+				<!-- 中间个人信息 -->
+				<view class="middle-info text-center">
 					<view class="" @tap="actionUploadAvatar(true)">
 						<image :src="userData.avatar" mode="" class="user-avatar" v-if="userData.avatar"></image>
 						<image src="/static/family/default-head-bg.jpg" mode="" class="user-avatar" v-else></image>
 					</view>
-
-					<!-- 家庭头像、昵称 -->
-					<view class="family-info-wrao">
-						<image :src="userData.familyAvatar" mode="" class="family-avatar" v-if="userData.familyAvatar"></image>
-						<image src="/static/family/home.png" mode="" class="family-avatar" v-else></image>
-					</view>
+					<view class="user-name">{{ userData.userName || '--' }}</view>
 				</view>
 			</view>
 		</view>
@@ -32,16 +39,14 @@
 				<text :class="['tab-item', { active: item.id === currentTab }]" v-for="(item, index) in tabList" :key="index" @tap="changeTab(item.id)">{{ item.name }}</text>
 			</view>
 
-			<swiper class="swiper-wrap" :current="currentTab" @change="changeSwiper" duration="300">
-				<!-- 账户 -->
-				<swiper-item class="swiper-item">
+			<j-swiper :swiperLen="2" @swiperChange="swiperChange" :swiperIdx="currentTab">
+				<!-- 主页 -->
+				<view class="j-swiper-item">
 					<!-- 余额展示 -->
 					<view class="balance-container">
 						<view class="balance-wrap">
-							<view class="money-title">
-								<text>家庭：{{ userData.familyName }} 当前余额（元）</text>
-							</view>
-							<view class="money-count">{{ userData.balance }}</view>
+							<view class="money-title"><text>当前余额（元）</text></view>
+							<view class="money-count">{{ $store.state.userInfo.balance }}</view>
 						</view>
 					</view>
 
@@ -51,34 +56,25 @@
 							<text>首页动画</text>
 							<switch class="open-index-switch f-right" color="#00d18b" :checked="$store.state.isOpenIndexAni" @change="isOpenIndexAniEvt" />
 						</view>
-
-						<view class="my-fun-item" hover-class="hover-current" v-for="(item, index) in funArr" :key="index" @tap="funTap(item)">
-							<text>{{ item.name }}</text>
-							<text class="icons icon-jiantou_you f-right"></text>
-						</view>
-
-						<view class="logout-wrap">
-							<view class="logout-item" hover-class="hover-current" @tap="loginOther">切换账号</view>
-							<view class="logout-item" hover-class="hover-current" @tap="loginFamily">家庭登录</view>
-						</view>
 					</view>
-				</swiper-item>
+				</view>
 
-				<swiper-item class="swiper-item">
+				<!-- 预留位置，暂为相册 -->
+				<view class="j-swiper-item">
 					<view class="my-page-order-wrap" v-if="!photos.length"><empty-data noDataDesc="暂无相册" /></view>
-				</swiper-item>
-			</swiper>
+				</view>
+			</j-swiper>
 		</view>
 
-		<!-- 修改密码 -->
-		<changePwdCom :isShowDialog="isShowDialog" @closeDialog="closeDialog" @changePwdSuccess="changePwdSuccess" :userAvatar="userData.avatar" />
-
 		<!-- 查看头像弹窗 -->
-		<view class="big-avatar-wrap" v-if="isShowUploadAvatar">
+		<view class="big-avatar-wrap flex flex-justify" v-if="isShowUploadAvatar">
 			<view class="mask" @tap="actionUploadAvatar(false)"></view>
+
 			<view class="avatar-content">
-				<image :src="userData.avatar" mode="" class="big-user-avatar" v-if="userData.avatar"></image>
-				<image src="/static/family/default-head-bg.jpg" mode="" class="big-user-avatar" v-else></image>
+				<view class="big-user-avatar-wrap">
+					<image :src="userData.avatar" mode="" class="big-user-avatar" v-if="userData.avatar"></image>
+					<image src="/static/family/default-head-bg.jpg" mode="widthFix" class="big-user-avatar" v-else></image>
+				</view>
 				<view class="update-avatar-tip text-center" @tap="changeAvatar">更换头像</view>
 			</view>
 		</view>
@@ -86,16 +82,17 @@
 </template>
 
 <script>
-	import config from '@/common/config.js'
-import changePwdCom from './include/changePwdCom.vue';
+import jSwiper from '@/component/jSwiper.vue';
+import config from '@/common/config.js';
 export default {
 	data() {
 		return {
 			userData: {},
 
 			currentTab: 0,
-			tabList: [{ id: 0, name: '主页' }, { id: 1, name: '相册' }],
-			funArr: [{ id: 0, name: '修改密码' }],
+
+			tabList: [{ id: 0, name: '主页' }, { id: 1, name: '动态' }],
+
 			photos: [],
 
 			greetings: '', // 问候据
@@ -105,12 +102,16 @@ export default {
 			isShowUploadAvatar: false // 是否显示大头像弹窗
 		};
 	},
+
 	onLoad() {
 		this.getUserInfo();
 	},
+
 	onShow() {
 		this.createGreetings();
+		
 	},
+
 	methods: {
 		// 获取问候据
 		createGreetings() {
@@ -144,22 +145,21 @@ export default {
 		changeAvatar() {
 			const _self = this;
 			uni.chooseImage({
-				success: (res) => {
+				success: res => {
 					const tempFilePaths = res.tempFilePaths;
 					uni.uploadFile({
 						url: `${config.getConfig().baseUrl}/user/uploadAvatar`,
 						filePath: tempFilePaths[0],
 						name: 'avatarFile',
-						header:{
-							'Authorization': _self.$store.state.token
+						header: {
+							Authorization: _self.$store.state.token
 						},
-						success: (data) => {
+						success: data => {
 							const parseData = JSON.parse(data.data);
 							_self.actionUploadAvatar(false);
 							_self.userData.avatar = parseData.data.avatar;
-							
 						},
-						fail: (e) => {
+						fail: e => {
 							_self.$common.showModal(e.msg || '');
 						}
 					});
@@ -173,30 +173,9 @@ export default {
 			this.$store.commit('SETINDEXANI', !b);
 		},
 
-		funTap(item) {
-			// 修改密码
-			if (item.id === 0) {
-				this.isShowDialog = true;
-			}
-		},
-
-		// 切换账号
-		loginOther() {
-			uni.navigateTo({
-				url: '/pages/login/login'
-			});
-		},
-
-		// 登录家庭账户
-		loginFamily() {
-			uni.navigateTo({
-				url: '/pages/family/login'
-			});
-		},
-
 		// 滑动swiper
-		changeSwiper(e) {
-			this.currentTab = e.detail.current;
+		swiperChange(e) {
+			this.currentTab = e;
 		},
 		// 点击tab
 		changeTab(id) {
@@ -210,7 +189,6 @@ export default {
 			})
 				.then(res => {
 					if (res) {
-						res.balance = res.balance || res.balance === 0 ? res.balance.toFixed(2) : '--';
 						this.userData = res;
 					}
 				})
@@ -218,77 +196,72 @@ export default {
 					this.$common.showModal(e.msg || '');
 				})
 				.finally(() => {});
-		},
-
-		// 密码修改成功
-		changePwdSuccess() {
-			this.closeDialog();
-			uni.redirectTo({
-				url: '/pages/login/login'
-			});
-		},
-
-		// 关闭dialog
-		closeDialog(e) {
-			this.isShowDialog = e;
 		}
 	},
-	components: { changePwdCom }
+	components: { jSwiper }
 };
 </script>
 
-<style lang="scss" scoped>
-.family-container {
+<style lang="scss">
+.user-container {
 	width: 100%;
 	background: #f4f4f4;
-	.family-info-wrap {
+	.user-info-wrap {
 		width: 100%;
 		height: 420rpx;
 		overflow: hidden;
 		position: relative;
-		.family-info-bg {
+		.user-info-bg {
 			width: 100%;
 			position: absolute;
 			left: 0;
 			top: 0;
-			filter: blur(8rpx);
 			z-index: 1;
 		}
-		.family-head-wrap {
+		.user-head-wrap {
 			width: 100%;
 			height: 100%;
-			padding: 60rpx 40rpx 40rpx;
+			padding: 24rpx 24rpx;
 			position: relative;
 			z-index: 2;
-			justify-content: space-between;
 			color: #ffffff;
-			.left-info {
-				.greet-tip {
-					font-size: 22rpx;
-					font-weight: bold;
-				}
-				.user-name {
-					margin: 10rpx 0 20rpx;
-					font-size: 48rpx;
-					font-weight: bold;
+			font-size: 24rpx;
+			text-shadow: 0 0 4rpx rgba(0, 0, 0, 0.6);
+			background: rgba(0, 0, 0, 0.22);
+			.top-info {
+				justify-content: space-between;
+				margin-bottom: 10rpx;
+				.family-info {
+					flex-shrink: 0;
+					padding: 4rpx 20rpx;
+					margin: 0 10rpx 0 0;
+					background: rgba(0, 0, 0, 0.3);
+					border-radius: 200rpx;
+					.family-avatar {
+						width: 34rpx;
+						height: 34rpx;
+						margin: 0 2rpx 0 4rpx;
+					}
 				}
 			}
-			.right-info {
+
+			.greet-tip {
+				padding: 0 20rpx;
+				font-size: 28rpx;
+			}
+
+			.middle-info {
 				.user-avatar {
 					width: 146rpx;
 					height: 146rpx;
-					border: 6rpx solid rgba(244, 244, 244, 0.2);
+					border: 4rpx solid rgba(244, 244, 244, 0.5);
 					border-radius: 50%;
 					overflow: hidden;
 					box-shadow: 0 0 4rpx 4rpx rgba(0, 0, 0, 0.1);
 				}
-
-				.family-info-wrao {
-					margin-top: 50rpx;
-					.family-avatar {
-						width: 80rpx;
-						height: 80rpx;
-					}
+				.user-name {
+					font-size: 30rpx;
+					margin: 14rpx 0;
 				}
 			}
 		}
@@ -296,6 +269,8 @@ export default {
 
 	.fun-wrap {
 		.fun-tab-wrap {
+			position: sticky;
+			top: 0;
 			background: #fff;
 			margin-bottom: 30rpx;
 			.tab-item {
@@ -323,13 +298,8 @@ export default {
 			}
 		}
 
-		.swiper-wrap {
-			min-height: calc(100vh - 530rpx - var(--window-bottom));
-			// padding: 0 40rpx;
-			// background: #fff;
-			.my-page-order-wrap {
-				margin-top: 100rpx;
-			}
+		.j-swiper-item{
+			min-height: calc(100vh - 530rpx);
 		}
 
 		.fun-list {
@@ -378,7 +348,6 @@ export default {
 			height: 100rpx;
 			padding: 0 60rpx;
 			background: #fff;
-			// border-bottom: 2rpx solid #ddd;
 			&:last-child {
 				border-bottom: 0;
 			}
@@ -391,20 +360,6 @@ export default {
 				transform: scale(0.7, 0.7);
 			}
 		}
-
-		.logout-wrap {
-			margin-top: 16rpx;
-			background: #fff;
-			text-align: center;
-			.logout-item {
-				height: 100rpx;
-				line-height: 100rpx;
-				border-bottom: 2rpx solid #ddd;
-				&:last-child {
-					border-bottom: 0;
-				}
-			}
-		}
 	}
 
 	.hover-current {
@@ -414,33 +369,38 @@ export default {
 	.big-avatar-wrap {
 		width: 100%;
 		height: 100%;
+		flex-direction: column;
 		position: fixed;
 		left: 0;
 		top: 0;
-		z-index: 11;
+		z-index: 50;
 		.mask {
 			width: 100%;
 			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
 			background: rgba(0, 0, 0, 0.7);
 		}
 		.avatar-content {
 			width: 100%;
 			max-height: 80%;
-			overflow: scroll;
-			position: absolute;
-			left: 0;
-			top: 20%;
+			position: relative;
 
-			.big-user-avatar {
-				display: block;
-				max-width: 80%;
-				margin: 0 auto;
+			.big-user-avatar-wrap {
+				width: 100%;
+				max-height: 100%;
+				overflow: scroll;
+				.big-user-avatar {
+					display: block;
+					max-width: 80%;
+					margin: 0 auto;
+				}
 			}
 			.update-avatar-tip {
 				padding: 30rpx 0;
 				color: #fff;
 				font-size: 24rpx;
-			
 			}
 		}
 	}

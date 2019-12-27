@@ -29,13 +29,13 @@ export default {
 			}
 		});
 
-		// 刷新页面后，从本地取token、familyId，存入store，方便其余页面直接从store获取而不用执行本地存储读取操作。
-		const { userInfo, token, familyId } = await this.$common.getStorage();
+		// 刷新页面后，从本地取token...，存入store，方便其余页面直接从store获取而不用执行本地存储读取操作。
+		let { userInfo, token } = await this.$common.getStorage();
+
 		this.$store.commit('SETTOKEN', token || '');
 		this.$store.commit('SETUSERINFO', userInfo || {});
-		this.$store.commit('SETFAMILYID', familyId || '');
-		
 	},
+
 	onShow: function() {},
 	onHide: function() {}
 };
@@ -46,4 +46,7 @@ export default {
 @import url('./style/base.scss');
 
 @import url('./style/icon.css');
+
+// 导入j-swiper样式
+@import url('./style/j-swiper.css');
 </style>

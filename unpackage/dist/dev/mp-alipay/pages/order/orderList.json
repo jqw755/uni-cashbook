@@ -1,0 +1,8 @@
+{
+  "pullRefresh": true,
+  "usingComponents": {
+    "navbar": "/component/navbar",
+    "empty-data": "/component/emptyData",
+    "order-item": "/pages/order/orderItem"
+  }
+}

@@ -5,7 +5,7 @@
 
 		<view class="list-item" v-for="(item, index) in orderList" :key="index"><order-item :order-data="item" /></view>
 
-		<view class="order-page-no-data" v-if="!pageLoading && !orderList.length"><empty-data noDataDesc="暂无订单" /></view>
+		<empty-data noDataDesc="暂无订单" v-if="!pageLoading && !orderList.length" />
 	</view>
 </template>
 
@@ -18,7 +18,7 @@ export default {
 			pageLoading: true,
 			orderList: [],
 			page: 1,
-			pageSize: 20,
+			pageSize: 10,
 			totalSize: 0 // 总条数
 		};
 	},
@@ -31,37 +31,40 @@ export default {
 	onPullDownRefresh() {
 		this.page = 1;
 		this.getOrderList();
-		uni.startPullDownRefresh();
+		uni.stopPullDownRefresh();
 	},
 	// 上拉加载下一页
 	onReachBottom() {
-		if (this.totalSize < this.orderList.length) {
+		if (this.orderList.length < this.totalSize) {
 			this.page += 1;
 			this.getOrderList();
-			uni.startPullDownRefresh();
 		}
 	},
 
 	methods: {
 		getOrderList(page = this.page) {
-			return this.$api({
+			 
+			const orderList = this.orderList;
+
+			this.$api({
 				url: '/order/list',
 				data: {
 					page,
-					pageSize: this.pageSize
+					pageSize: this.pageSize,
+					lastId: orderList.length ? orderList[orderList.length - 1]['_id'] : ''
 				}
 			})
 				.then(res => {
 					if (res && res.list) {
-						this.orderList = res.list;
-						return res;
+						this.totalSize = res.total;
+						this.orderList = page === 1 ? res.list : orderList.concat(res.list);
 					}
 				})
 				.catch(e => {
 					this.$common.toast(e.msg);
 				})
 				.finally(() => {
-					if (page === 1) {
+					if (this.pageLoading) {
 						this.pageLoading = false;
 					}
 				});
@@ -77,8 +80,5 @@ export default {
 <style lang="scss">
 .order-list-container {
 	background: #fff;
-	.order-page-no-data {
-		margin-top: 150rpx;
-	}
 }
 </style>

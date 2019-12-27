@@ -4,9 +4,7 @@
 			<text slot="title">添加家庭成员</text>
 			<view slot="content">
 				<view class="member-register">
-					<!-- 头部logo -->
-					<view class="head-bg flex flex-justify" @tap="changeLocalPic"><image src="/static/login/head.png" class="head-logo" /></view>
-
+			
 					<!-- 登录form -->
 					<view class="login_form flex flex-align flex-justify">
 						<view class="input-wrap flex flex-align flex-justify">
@@ -26,7 +24,6 @@
 
 						<view class="line" />
 
-						<view class="input-wrap flex flex-align flex-justify"><input type="password" :value="userConfirmPwd" @input="inputConfirmPwd" placeholder="请再次输入密码" /></view>
 					</view>
 
 					<!-- 登录按钮 -->
@@ -55,27 +52,12 @@ export default {
 			// isShowDialog: true
 			username: '',
 			userpwd: '',
-			userConfirmPwd: '',
 			pwdType: 'password',
 			isSubmiting: false
 		};
 	},
 	created() {},
 	methods: {
-		// 选择本地图片上传头像
-		changeLocalPic(){
-			this.$api({
-				url: '/family/uploadAvatar',
-				data: params
-			})
-				.then(res => {})
-				.catch(e => {
-					this.$toast(e.msg);
-				})
-				.finally(() => {
-					this.isSubmiting = false;
-				});
-		},
 		// 输入账户
 		inputUsername(e) {
 			this.username = e.target.value;
@@ -84,10 +66,7 @@ export default {
 		inputPwd(e) {
 			this.userpwd = e.target.value;
 		},
-		// 确认密码
-		inputConfirmPwd(e) {
-			this.userConfirmPwd = e.target.value;
-		},
+
 		// 清空账户
 		delUser() {
 			this.username = '';
@@ -102,8 +81,7 @@ export default {
 				return
 			}
 			const username = this.username,
-				userpwd = this.userpwd,
-				userConfirmPwd = this.userConfirmPwd;
+				userpwd = this.userpwd;
 			if (!username.trim()) {
 				this.$common.toast('请输入账号');
 				return;
@@ -112,14 +90,7 @@ export default {
 				this.$common.toast('请输入密码');
 				return;
 			}
-			if (!userConfirmPwd.trim()) {
-				this.$common.toast('请输入确认密码');
-				return;
-			}
-			if (userConfirmPwd.trim() !== userpwd.trim()) {
-				this.$common.toast('两次密码输入不一致');
-				return;
-			}
+			
 			const params = {
 				userName: username,
 				password: userpwd
@@ -144,7 +115,6 @@ export default {
 		closeDialog() {
 			this.username = '';
 			this.userpwd = '';
-			this.userConfirmPwd = '';
 			this.pwdType = 'password';
 			this.$emit('closeDialog', false);
 		}
@@ -157,20 +127,6 @@ export default {
 $form-border-color: rgba(214, 214, 214, 1);
 $text-color: #b6b6b6;
 .member-register {
-	.head-bg {
-		border-radius: 50%;
-		width: 140rpx;
-		height: 140rpx;
-		background: #fc2c5d;
-		align-items: flex-end;
-		overflow: hidden;
-		margin: 0 auto;
-
-		.head-logo {
-			width: 88rpx;
-			height: 99rpx;
-		}
-	}
 
 	.login_form {
 		margin: 40rpx auto;

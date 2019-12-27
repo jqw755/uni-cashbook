@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "by-date": "/pages/statistics/include/date",
+    "ranking": "/pages/statistics/include/ranking",
+    "chart": "/pages/statistics/include/chart",
+    "income": "/component/income",
+    "expenditure": "/component/expenditure"
+  }
+}

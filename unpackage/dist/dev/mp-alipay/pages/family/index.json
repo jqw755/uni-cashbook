@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "empty-data": "/component/emptyData",
+    "j-swiper": "/component/jSwiper",
+    "add-member": "/pages/family/include/addMember",
+    "family-member": "/pages/family/include/familyMember",
+    "order-item": "/pages/order/orderItem"
+  }
+}

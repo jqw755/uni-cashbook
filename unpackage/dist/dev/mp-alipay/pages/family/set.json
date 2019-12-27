@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "navbar": "/component/navbar",
+    "change-pwd-com": "/pages/family/include/changePwdCom"
+  }
+}

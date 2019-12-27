@@ -86,6 +86,11 @@ const utils = {
 		}
 		return prefix + weekly;
 	},
+	
+	// valid money (max 2 decimal)
+	checkMoney(money) {
+			return /((^[1-9]\d*)|^0)(\.\d{0,2}){0,1}$/.test(money);
+	},
 
 };
 

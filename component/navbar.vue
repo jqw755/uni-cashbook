@@ -1,6 +1,6 @@
 <template>
 	<view class="nav-bar-wrap" :style="{ height: customeBar + 'px' }">
-		<view class="nav-bar-fixed-wrap flex flex-align" :style="{ height: customeBar + 'px' }">
+		<view class="nav-bar-fixed-wrap flex flex-align" :style="style">
 			<!-- 导航栏左侧 -->
 			<view class="nav-left-wrap" v-if="isShowBack" @tap="backPage">
 				<text class="icons icon-fanhui"></text>
@@ -19,10 +19,17 @@
 <script>
 export default {
 	props: {
+		// 是否显示返回按钮
 		isShowBack: {
 			type: Boolean,
 			required: false,
 			default: true
+		},
+		// 背景色
+		bgImage: {
+			type: String,
+			required: false,
+			default: ''
 		}
 	},
 	data() {
@@ -30,9 +37,39 @@ export default {
 			customeBar: this.$customeBar
 		};
 	},
+
+	computed: {
+		style() {
+			let customeBar = this.$customeBar,
+				bgImage = this.bgImage;
+
+			let style = `height:${customeBar}px;`;
+
+			if (this.bgImage) {
+				style = `${style}background-image:${bgImage};`;
+			}
+			return style;
+		}
+	},
+
 	methods: {
 		// 点击返回
 		backPage() {
+			var pages = getCurrentPages();
+
+			// 当不存在上级页面
+			if (pages.length === 1) {
+				const isFamily = this.$store.state.userInfo.familyId;
+				if (isFamily) {
+					uni.switchTab({
+						url: '/pages/index/index'
+					});
+				} else {
+					uni.redirectTo({ url: '/pages/family/index' });
+				}
+
+				return;
+			}
 			uni.navigateBack({
 				delta: 1
 			});
@@ -51,13 +88,12 @@ export default {
 		top: 0;
 		z-index: 9999;
 		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-		background-color: $uni-bg-color;
-		color: #ffffff;
-		padding: 0 32rpx;
-		font-size: $uni-font-size-lg;
-		font-weight: bold;
 		/* 浏览器不支持的时候显示 */
-		background-color: #f3b505;
+		background-color: #fff;
+		color: #fff;
+		padding: 0 28rpx;
+		font-size: 32rpx;
+		font-weight: bold;
 		background-image: linear-gradient(-90deg, #c809c2, #f3b505);
 
 		.nav-left-wrap {

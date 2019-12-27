@@ -1,5 +1,8 @@
 <template>
 	<view class="page_login">
+		<!-- 导航栏 -->
+		<navbar v-if="isShowNavBar" />
+
 		<!-- 头部logo -->
 		<view class="head-wrap flex flex-align flex-justify">
 			<view class="head-bg flex flex-justify"><image src="/static/login/head.png" class="head-logo" /></view>
@@ -32,11 +35,20 @@
 export default {
 	data() {
 		return {
+			isShowNavBar: false, // 是否需要导航栏
+
 			username: '',
 			userpwd: '',
 			pwdType: 'password'
 		};
 	},
+
+	onLoad() {
+		var pages = getCurrentPages();
+		this.isShowNavBar = pages.length > 1;
+
+	},
+
 	methods: {
 		inputUsername(e) {
 			this.username = e.target.value;
@@ -74,15 +86,15 @@ export default {
 				.then(async res => {
 					if (res) {
 						await this.$common.setStorage('token', res.token);
-						await this.$common.setStorage('familyId', res.familyId);
+						await this.$common.setStorage('userInfo', res);
 						this.$store.commit('SETTOKEN', res.token);
-						this.$store.commit('SETFAMILYID', res.familyId);
+						this.$store.commit('SETUSERINFO', res);
 						// 重定向到成员页面
 						uni.switchTab({
 							url: '/pages/index/index'
 						});
 					}
-	
+
 				})
 				.catch(e => {
 					this.$common.toast(e.msg);

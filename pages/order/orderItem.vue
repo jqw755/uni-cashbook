@@ -50,7 +50,7 @@ export default {
 <style lang="scss">
 .order-item-wrap {
 	padding: 0 32rpx;
-	background: #f6f6f6;
+	background: #fff;
 
 	&:active {
 		background: #ddd;

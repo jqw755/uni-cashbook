@@ -17,27 +17,27 @@
 			<ul class="order-detail-bottom">
 				<li class="detail-item">
 					<text class="detail-tip">当前状态</text>
-					<text>{{ orderData.orderState || '--' }}</text>
-				</li>
-				<li class="detail-item">
-					<text class="detail-tip">账单备注</text>
-					<text>{{ orderData.remark || '--' }}</text>
+					<text>{{ orderData.orderState === 1 ? '已完成' : '未知'}}</text>
 				</li>
 				<li class="detail-item">
 					<text class="detail-tip">支付方式</text>
-					<text>{{ orderData.payType }}</text>
+					<text>本APP支付</text>
 				</li>
 				<li class="detail-item">
 					<text class="detail-tip">消费时间</text>
 					<text>{{ orderData.payTime || '--' }}</text>
 				</li>
 				<li class="detail-item">
-					<text class="detail-tip">创建时间</text>
+					<text class="detail-tip">订单创建时间</text>
 					<text>{{ orderData.createTime || '--' }}</text>
 				</li>
 				<li class="detail-item">
-					<text class="detail-tip">订单号</text>
-					<text>{{ orderData.orderNo || '--' }}</text>
+					<text class="detail-tip" :selectable="true">订单号</text>
+					<text>{{ orderData['_id'] || '--' }}</text>
+				</li>
+				<li class="detail-item">
+					<text class="detail-tip">订单备注</text>
+					<text>{{ orderData.remark || '--' }}</text>
 				</li>
 				<li class="detail-item">
 					<text class="detail-tip">照片</text>

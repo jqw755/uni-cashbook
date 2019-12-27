@@ -36,7 +36,7 @@
 						</view>
 					</view>
 				</view>
-
+ 
 				<!-- 支出 -->
 				<view class="cate-item-wrap by-expenditure-wrap">
 					<view class="by-cate-title flex flex-align" @tap="tapCateTitle(2)">

@@ -1,0 +1,1 @@
+<view class="no-data-wrap"><image class="no-data-img" src="/static/no-data.png" mode></image><view class="no-data-tip">{{noDataDesc}}</view></view>

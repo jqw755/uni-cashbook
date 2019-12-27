@@ -1,7 +1,15 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/bookkeep/index",
+			"style": {}
+		},
+		{
 			"path": "pages/family/register",
+			"style": {}
+		},
+		{
+			"path": "pages/family/set",
 			"style": {}
 		},
 		{
@@ -29,15 +37,22 @@
 		{
 			"path": "pages/statistics/statistics",
 			"style": {}
-		}, {
+		},
+		{
 			"path": "pages/my/my",
 			"style": {}
-		}, {
+		},
+		{
+			"path": "pages/my/set",
+			"style": {}
+		},
+		{
 			"path": "pages/order/orderList",
 			"style": {
 				"enablePullDownRefresh": true
 			}
-		}, {
+		},
+		{
 			"path": "pages/order/orderDetail",
 			"style": {
 				"enablePullDownRefresh": true
@@ -58,8 +73,8 @@
 		"backgroundColor": "#ffffff",
 		"list": [{
 				"pagePath": "pages/index/index",
-				"iconPath": "static/tabbar/order.png",
-				"selectedIconPath": "static/tabbar/select-order.png",
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/select-home.png",
 				"text": "首页"
 			},
 			{
@@ -70,8 +85,8 @@
 			},
 			{
 				"pagePath": "pages/contacts/contacts",
-				"iconPath": "static/tabbar/chart.png",
-				"selectedIconPath": "static/tabbar/select-chart.png",
+				"iconPath": "static/tabbar/chat.png",
+				"selectedIconPath": "static/tabbar/select-chat.png",
 				"text": "圈子"
 			},
 			{
@@ -81,14 +96,6 @@
 				"text": "我"
 			}
 		]
-	},
-	"condition": { //模式配置，仅开发期间生效
-		"current": 0, //当前激活的模式(list 的索引项)
-		"list": [{
-			"name": "联系人", //模式名称
-			"path": "pages/contacts/contacts", //启动页面
-			"query": "" //启动参数
-		}]
 	}
 
 }

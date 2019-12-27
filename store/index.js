@@ -6,9 +6,9 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		token: '',
-		familyId: '',
 		userInfo: {},
 		isOpenIndexAni: false, // 是否开启首页动画
+		bookkeepingSuccess: false, // 是否记账成功
 	},
 
 	mutations: {
@@ -17,19 +17,19 @@ const store = new Vuex.Store({
 			state.token = data;
 		},
 
-		// 设置familyId
-		SETFAMILYID(state, data) {
-			state.familyId = data;
-		},
-
 		// 设置userInfo
 		SETUSERINFO(state, data) {
 			state.userInfo = data;
-		},	
-		
-		// 设置userInfo
+		},
+
+		// 设置是否开启首页动画
 		SETINDEXANI(state, data) {
 			state.isOpenIndexAni = data;
+		},
+
+		// 记账成功,返回首页时刷新数据
+		SETBOOKKEEPING(state, data) {
+			state.bookkeepingSuccess = data;
 		},
 
 	},

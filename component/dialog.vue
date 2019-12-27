@@ -129,11 +129,11 @@ export default {
 		-webkit-animation: zoomIn 200ms ease;
 		animation-fill-mode: forwards;
 		-webkit-animation-fill-mode: forwards;
+		overflow: hidden;
 		.dialog-title {
-			font-size: 36rpx;
+			font-size: 32rpx;
 			text-align: center;
-			color: #000;
-			font-weight: 500;
+			color: #333;
 			padding: 30rpx 0 32rpx 0;
 		}
 		.dialog-content {
@@ -145,7 +145,7 @@ export default {
 			height: 98rpx;
 			line-height: 98rpx;
 			border-top: 1px solid #e7e8e9;
-			font-size: 36rpx;
+			font-size: 32rpx;
 			margin-top: 32rpx;
 			text-align: center;
 			
@@ -154,13 +154,14 @@ export default {
 				height: 100%;
 				text-align: center;
 				position: relative;
-				overflow: hidden;
+				
 				&.current {
 					background: #f4f4f4;
 				}
 			}
 			.cancel-btn {
-				color: #999999;
+				color: #999;
+				font-weight: normal;
 			}
 			.line {
 				width: 1px;
@@ -171,7 +172,7 @@ export default {
 				top: 0;
 			}
 			.confirm-btn {
-				color: #00c200;
+				color: $uni-color-primary;
 			}
 		}
 	}
