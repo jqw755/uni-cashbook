@@ -89,6 +89,12 @@ export default {
 						await this.$common.setStorage('userInfo', res);
 						this.$store.commit('SETTOKEN', res.token);
 						this.$store.commit('SETUSERINFO', res);
+						
+						// 通知首页刷新
+						if(this.isShowNavBar){
+							this.$store.commit('ISHOMETABREFRESH', true);
+						}
+						
 						// 重定向到成员页面
 						uni.switchTab({
 							url: '/pages/index/index'

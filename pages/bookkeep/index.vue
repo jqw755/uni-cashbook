@@ -1,10 +1,8 @@
 <template>
 	<view class="bookkeep-wrap">
 		<!-- 导航栏 -->
-		<navbar bgImage='linear-gradient(-90deg, #3dbd4d, #e2b229)'>
-			<text slot="backText">记账</text>
-		</navbar>
-		
+		<navbar bgImage="linear-gradient(-90deg, #3dbd4d, #e2b229)"><text slot="backText">记账</text></navbar>
+
 		<!-- 收支类型 -->
 		<view class="type-tab-wrap flex flex-align flex-justify">
 			<text :class="['tab-item', { active: item.id === currentTab }]" v-for="(item, index) in tabList" :key="index" @tap="changeTab(item.id)">{{ item.name }}</text>
@@ -45,7 +43,7 @@
 import income from '@/component/income.vue';
 import expenditure from '@/component/expenditure.vue';
 import dateTimePicker from '@/component/datetime-picker.vue';
-import utils from '@/common/utils.js'
+import utils from '@/common/utils.js';
 
 export default {
 	data() {
@@ -56,13 +54,16 @@ export default {
 
 			goodsObj: {}, // 选中的支出/收入
 
+			incomeObj: {}, // 选中的收入
+			expenditureObj: {}, // 选中的支出
+
 			money: '', //
 			payTime: '', //
 			remark: '' //
 		};
 	},
 
-	onLoad() {console.log(111)},
+	onLoad() {},
 
 	methods: {
 		// 点击tab
@@ -77,13 +78,12 @@ export default {
 
 		// 选择收入类型
 		chooseIncome(data) {
-			console.log(data);
-			this.goodsObj = data;
+			this.incomeObj = data;
 		},
 
 		// 选择支出类型
 		chooseExpenditure(data) {
-			this.goodsObj = data;
+			this.expenditureObj = data;
 		},
 
 		// 打开时间picker
@@ -103,9 +103,9 @@ export default {
 			// 选中时间
 			const pickerTime = `${e.year}-${e.month}-${e.day} ${e.hour}:${e.minute}`;
 			// 不能大于当前时间
-			if( new Date(pickerTime).getTime() > nowTime ){
+			if (new Date(pickerTime).getTime() > nowTime) {
 				this.$common.toast('选中时间不能大于当前时间');
-				return
+				return;
 			}
 			this.payTime = pickerTime;
 		},
@@ -113,18 +113,26 @@ export default {
 		// 提交表单
 		submitFormEvt() {
 			const formType = this.tabList[this.currentTab],
-				{ id } = this.goodsObj,
 				money = this.money,
 				payTime = this.payTime,
 				remark = this.remark;
 
-			if (!id && id !== 0) {
+			let goodsObj = {};
+			if (this.currentTab === 0) {
+				goodsObj = this.expenditureObj;
+			} else if (this.currentTab === 1) {
+				goodsObj = this.incomeObj;
+			}
+
+			const { _id, goodsName, goodsImg, goodsType } = goodsObj;
+
+			if (!_id) {
 				this.$common.toast('请选择收支类型');
 				return;
 			}
-			if(!utils.checkMoney(money)){
+			if (!utils.checkMoney(money)) {
 				this.$common.toast('请输入金额，如有小数保留2位');
-				return
+				return;
 			}
 			if (!payTime) {
 				this.$common.toast('请选择时间');
@@ -140,26 +148,32 @@ export default {
 				type: formType.id + 1,
 				money,
 				payTime,
-				goodsId: id,
+				goodsId: _id,
+				goodsName,
+				goodsImg,
+				goodsType,
 				remark
 			};
+
 			this.$api({
 				url: '/user/bookkeeping',
 				data: params
 			})
-				.then( (res) => {
-					if(res){
+				.then(res => {
+					if (res) {
+						res.balance = res.balance || res.balance === 0 ? res.balance.toFixed(2) : '--';
+
 						let userInfo = this.$store.state.userInfo;
 						userInfo.balance = res.balance;
 
 						this.$common.toast('提交成功');
-						// 通知首页刷新订单
-						this.$store.commit('SETBOOKKEEPING', true);
-						
+						// 通知首页刷新
+						this.$store.commit('ISHOMETABREFRESH', true);
+
 						// 将最新余额存入本地userInfo和store
 						this.$store.commit('SETUSERINFO', userInfo);
 						this.$common.setStorage('userInfo', userInfo);
-						
+
 						uni.navigateBack({
 							delta: 1
 						});
@@ -248,7 +262,7 @@ export default {
 			padding: 20rpx 0;
 			background: #32c55d;
 			color: #fff;
-			margin: 60rpx auto;
+			margin: 60rpx auto 40rpx;
 			box-shadow: 0 0 10rpx 4rpx rgba(0, 0, 0, 0.1);
 			border-radius: 200rpx;
 			&.hover-class {

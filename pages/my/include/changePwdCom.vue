@@ -4,13 +4,9 @@
 			<text slot="title">修改密码</text>
 			<view slot="content">
 				<view class="member-register">
-
 					<!-- form -->
 					<view class="login_form flex flex-align flex-justify">
-						
-						<view class="input-wrap flex flex-align flex-justify">
-							<input type="password" v-model="userpwd" @input="inputPwd" placeholder="请输入当前账号密码" />
-						</view>
+						<view class="input-wrap flex flex-align flex-justify"><input type="password" v-model="userpwd" @input="inputPwd" placeholder="请输入当前账号密码" /></view>
 
 						<view class="line" />
 
@@ -23,12 +19,11 @@
 						</view>
 
 						<view class="line" />
-						
-						<view class="input-wrap flex flex-align flex-justify">
-							<input type="password" :value="userConfirmPwd" @input="inputConfirmPwd" placeholder="请输入确认密码" />
-						</view>
-					</view>
 
+						<view class="input-wrap flex flex-align flex-justify"><input type="password" :value="userConfirmPwd" @input="inputConfirmPwd" placeholder="请输入确认密码" /></view>
+
+						<view class="line" />
+					</view>
 				</view>
 			</view>
 		</j-dialog>
@@ -39,7 +34,6 @@
 import jDialog from '@/component/dialog.vue';
 export default {
 	props: {
-		
 		// 是否显示弹窗
 		isShowDialog: {
 			type: Boolean,
@@ -47,7 +41,7 @@ export default {
 			default() {
 				return false;
 			}
-		},
+		}
 	},
 	data() {
 		return {
@@ -78,8 +72,8 @@ export default {
 		},
 		// 注册
 		changePwdEvt() {
-			if(this.isSubmiting){
-				return
+			if (this.isSubmiting) {
+				return;
 			}
 			const userpwd = this.userpwd,
 				newPwd = this.newPwd,
@@ -136,11 +130,10 @@ export default {
 $form-border-color: rgba(214, 214, 214, 1);
 $text-color: #b6b6b6;
 .member-register {
-
 	.login_form {
 		margin: 40rpx auto;
 		flex-direction: column;
-		border: 1px solid $form-border-color;
+		// border: 1px solid $form-border-color;
 		border-radius: 20rpx;
 
 		.line {

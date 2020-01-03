@@ -1,9 +1,0 @@
-{
-  "pullRefresh": true,
-  "usingComponents": {
-    "empty-data": "/component/emptyData",
-    "rili": "/component/rili",
-    "bolang": "/component/bolang",
-    "order-item": "/pages/order/orderItem"
-  }
-}

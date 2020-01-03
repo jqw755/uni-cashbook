@@ -27,6 +27,9 @@
 						<view class="input-wrap flex flex-align flex-justify">
 							<input type="password" :value="userConfirmPwd" @input="inputConfirmPwd" placeholder="请输入确认密码" />
 						</view>
+						
+						<view class="line" />
+						
 					</view>
 
 				</view>
@@ -140,7 +143,7 @@ $text-color: #b6b6b6;
 	.login_form {
 		margin: 40rpx auto;
 		flex-direction: column;
-		border: 1px solid $form-border-color;
+		// border: 1px solid $form-border-color;
 		border-radius: 20rpx;
 
 		.line {

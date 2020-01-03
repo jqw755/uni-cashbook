@@ -62,7 +62,6 @@ import orderItem from '../order/orderItem.vue';
 export default {
 	data() {
 		return {
-			familyId: '',
 			orderList: [],
 			isPageScroll: false, // 页面是否在滚动
 			timer: null
@@ -70,16 +69,15 @@ export default {
 	},
 
 	onLoad() {
-		const { familyId } = this.$store.state.userInfo;
-		this.familyId = familyId;
 
 		this.getOrderList();
 	},
 
 	onShow() {
-		if (this.$store.state.bookkeepingSuccess) {
+		// 刷新tab首页
+		if (this.$store.state.isHomeTabRefresh) {
 			this.getOrderList();
-			this.$store.commit('SETBOOKKEEPING', false);
+			this.$store.commit('ISHOMETABREFRESH', false);
 		}
 	},
 
@@ -179,7 +177,7 @@ export default {
 			}
 
 			.balance-tip {
-				color: #a4a4a4;
+				color: #bbb;
 
 				.icon-qianbao {
 					color: #ddca26;
@@ -191,7 +189,7 @@ export default {
 	.no-bolang-view {
 		width: 100%;
 		height: 100%;
-		background-image: linear-gradient(200deg, #007851, #14a032);
+		background-image: linear-gradient(-90deg, #2ba32f, $uni-color-primary);
 	}
 }
 
@@ -205,6 +203,7 @@ export default {
 		background: #e5e5e5;
 		position: sticky;
 		top: 0;
+		z-index: 10;
 
 		.title {
 			font-size: 40rpx;

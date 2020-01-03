@@ -2,14 +2,13 @@
 	<view class="family-container">
 		<!-- 头像 昵称等信息 -->
 		<view class="family-info-wrap flex flex-align flex-justify">
-			<image src="/static/family/default-head-bg.jpg" mode="aspectFill" class="family-info-bg"></image>
+			<image src="/static/default-user-head-bg.jpg" mode="aspectFill" class="family-info-bg"></image>
 			<view class="family-head-wrap flex flex-align flex-justify">
-				
 				<navigator url="/pages/family/set" class="set-btn">设置</navigator>
-				
+
 				<image :src="familyData.familyAvatar" mode="" class="family-head" v-if="familyData.familyAvatar"></image>
 				<image src="/static/family/family-logo.png" mode="" class="family-head" v-else></image>
-				<view class="family-name">{{familyData.familyName||'--'}}</view>
+				<view class="family-name">{{ familyData.familyName || '--' }}</view>
 				<view class="family-tags">吃货家庭，开心，美食</view>
 			</view>
 		</view>
@@ -20,24 +19,18 @@
 			<view class="fun-tab-wrap flex flex-align flex-justify">
 				<text :class="['tab-item', { active: item.id === currentTab }]" v-for="(item, index) in tabList" :key="index" @tap="changeTab(item.id)">{{ item.name }}</text>
 			</view>
-		
+
 			<j-swiper :swiperLen="3" @swiperChange="changeSwiper" :swiperIdx="currentTab">
-				<view class="j-swiper-item">
-					<family-member @toAddMember="addMember" :familyData="familyData"/>
-				</view>
-				
+				<view class="j-swiper-item"><family-member @toAddMember="addMember" :familyData="familyData" /></view>
+
 				<view class="j-swiper-item">
 					<order-item v-for="(item, index) in orderList" :key="index" :order-data="item" />
-				
+
 					<empty-data noDataDesc="暂无订单" v-if="!orderList.length" />
 				</view>
-				
-				<view class="j-swiper-item">
-					<empty-data noDataDesc="暂无相册" v-if="!photos.length" />
-				</view>
+
+				<view class="j-swiper-item"><empty-data noDataDesc="暂无相册" v-if="!photos.length" /></view>
 			</j-swiper>
-		
-		
 		</view>
 
 		<!-- 添加成员diolog -->
@@ -46,15 +39,15 @@
 </template>
 
 <script>
-	import jSwiper from '@/component/jSwiper.vue';
+import jSwiper from '@/component/jSwiper.vue';
 import addMember from './include/addMember.vue';
 import familyMember from './include/familyMember.vue';
 import orderItem from '../order/orderItem.vue';
 export default {
 	data() {
 		return {
-			familyData:{},
-			
+			familyData: {},
+
 			currentTab: 0,
 			tabList: [{ id: 0, name: '家庭' }, { id: 1, name: '订单' }, { id: 2, name: '相册' }],
 			orderList: [],
@@ -65,7 +58,6 @@ export default {
 	},
 	onLoad() {
 		this.getFamilyInfo();
-	
 	},
 	methods: {
 		// 滑动swiper
@@ -76,30 +68,30 @@ export default {
 		changeTab(id) {
 			this.currentTab = id;
 		},
-		
+
 		// 添加成员
 		addMember(e) {
 			this.isShowDialog = e;
 		},
-		
+
 		// 关闭添加成员dialog
 		closeDialog(e) {
 			this.isShowDialog = e;
 		},
-		
+
 		// 添加成功
-		addMemberSuccess(){
+		addMemberSuccess() {
 			this.closeDialog();
 			this.getFamilyInfo();
 		},
-		
+
 		// 查询家庭信息
 		getFamilyInfo() {
 			this.$api({
 				url: '/family/info'
 			})
 				.then(res => {
-					if(res){
+					if (res) {
 						res.balance = res.balance || res.balance === 0 ? res.balance.toFixed(2) : '--';
 						this.familyData = res;
 					}
@@ -107,12 +99,8 @@ export default {
 				.catch(e => {
 					this.$common.showModal(e.msg || '');
 				})
-				.finally(() => {
-				});
-		},
-		
-		
-		
+				.finally(() => {});
+		}
 	},
 	components: { jSwiper, addMember, familyMember, orderItem }
 };
@@ -141,15 +129,15 @@ export default {
 			position: relative;
 			flex-direction: column;
 			z-index: 2;
-			background: rgba(0, 0, 0, .22);
-			.set-btn{
+			background: rgba(0, 0, 0, 0.22);
+			.set-btn {
 				color: #ddd;
 				font-size: 24rpx;
 				position: absolute;
 				right: 32rpx;
 				top: 20rpx;
 			}
-			
+
 			.family-head {
 				width: 140rpx;
 				max-height: 140rpx;
@@ -173,11 +161,11 @@ export default {
 	}
 
 	.fun-wrap {
-		.j-swiper-item{
+		.j-swiper-item {
 			min-height: calc(100vh - 530rpx);
 			background: #fff;
 		}
-		
+
 		.fun-tab-wrap {
 			background: #fff;
 			margin-bottom: 30rpx;

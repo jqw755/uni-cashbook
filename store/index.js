@@ -8,7 +8,7 @@ const store = new Vuex.Store({
 		token: '',
 		userInfo: {},
 		isOpenIndexAni: false, // 是否开启首页动画
-		bookkeepingSuccess: false, // 是否记账成功
+		isHomeTabRefresh: false, // 是否记账成功
 	},
 
 	mutations: {
@@ -27,9 +27,9 @@ const store = new Vuex.Store({
 			state.isOpenIndexAni = data;
 		},
 
-		// 记账成功,返回首页时刷新数据
-		SETBOOKKEEPING(state, data) {
-			state.bookkeepingSuccess = data;
+		// 返回tab首页时刷新数据
+		ISHOMETABREFRESH(state, data) {
+			state.isHomeTabRefresh = data;
 		},
 
 	},

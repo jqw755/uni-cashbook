@@ -19,7 +19,7 @@ page{
 	display: flex;
 	width: 100%;
 	min-height: 100%;
-	overflow-x: hidden;
+	// overflow-x: hidden; 此代码会影响 position: sticky
 	background-color: #f1f1f1;
 	font-size: 28rpx;
 	color: #333333;

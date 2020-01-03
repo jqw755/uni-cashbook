@@ -45,13 +45,17 @@ export default {
 		getOrderList(page = this.page) {
 			 
 			const orderList = this.orderList;
+			let lastId = '';
+			if(page > 1){
+				lastId = orderList.length ? orderList[orderList.length - 1]['_id'] : ''
+			}
 
 			this.$api({
 				url: '/order/list',
 				data: {
 					page,
 					pageSize: this.pageSize,
-					lastId: orderList.length ? orderList[orderList.length - 1]['_id'] : ''
+					lastId
 				}
 			})
 				.then(res => {

@@ -1,12 +1,13 @@
 <template>
 	<navigator :url="'/pages/order/orderDetail?orderNo=' + orderData._id" hover-class="none" class="order-item-wrap flex flex-align">
 		<!-- 收支类型icon -->
-		<view class="order-type-icon"><image src="/static/cate/canyin.png" mode="" class="order-type-img"></image></view>
+		<view class="order-type-icon flex flex-align flex-justify"><image :src="orderData.goodsImg" mode="" class="order-type-img"></image></view>
 
-		<view class="order-data-wrap flex">
+		<view class="order-data-wrap flex text-overflow">
 			<view class="data-left">
-				<view class="cate-str">{{ orderData.cateStr || '--' }}</view>
-				<view class="order-ramark">{{ orderData.remark || '--' }}</view>
+				<view class="goods-name">{{ orderData.goodsName || '--' }}</view>
+				<view class="order-ramark text-overflow">{{ orderData.remark || '' }}</view>
+				<!-- 以创建时间倒序排序 -->
 				<view class="time">{{ formatTime || '--' }}</view>
 			</view>
 
@@ -39,7 +40,7 @@ export default {
 	methods: {},
 	computed: {
 		formatTime() {
-			const time = this.orderData.payTime;
+			const time = this.orderData.createTime;
 			if(!time) return
 			return utils.formatDate(time, 'yyyy-MM-dd hh:mm:ss');
 		}
@@ -64,8 +65,8 @@ export default {
 		margin-right: 20rpx;
 
 		.order-type-img {
-			max-width: 100%;
-			max-height: 100%;
+			width: 64rpx;
+			height: 64rpx;
 		}
 	}
 
@@ -76,16 +77,17 @@ export default {
 		border-bottom: 1px solid $uni-border-color;
 
 		.data-left {
+			max-width: 85%;
 			font-size: 24rpx;
 			color: #999;
 
-			.cate-str {
+			.goods-name {
 				font-size: 32rpx;
 				color: #333;
 				margin-bottom: 10rpx;
 			}
 			.order-ramark {
-				font-size: 28rpx;
+				font-size: 26rpx;
 				color: #333;
 				margin-bottom: 10rpx;
 			}

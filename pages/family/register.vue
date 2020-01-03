@@ -1,7 +1,7 @@
 <template>
 	<view class="page_register">
 		<!-- 导航栏 -->
-		<navbar v-if="isShowNavBar" />
+		<navbar v-if="isShowNavBar" bgImage='linear-gradient(-90deg, #fc2c5d, #3fbc62)'/> 
 
 		<!-- 头部logo -->
 		<view class="head-wrap flex ">创建您的家庭吧</view>

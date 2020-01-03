@@ -154,15 +154,18 @@
 <style lang="scss">
 	.contacts-wrap {
 		width: 100%;
-		background-color: #f1f1f1;
 
 		.contacts-swiper-wrap {
 			.letter-wrap {
+				position: sticky;
+				top: 0;
+				background: #f4f4f4;
 				flex: 1;
-				font-size: $uni-font-size-sm;
+				font-size: 24rpx;
 				color: $uni-text-color-grey;
 				height: 90rpx;
 				padding: 0 32rpx;
+				z-index: 5;
 			}
 
 			.contact-people-wrap {
@@ -200,6 +203,7 @@
 			position: fixed;
 			right: 32rpx;
 			top: 0;
+			z-index: 10;
 
 			.contacts-ul {
 				color: #888;

@@ -1,8 +1,8 @@
 <template>
 	<view class="expenditure-wrap flex">
-		<view :class="['expenditure-item', { active: item.id === selectedId }]" v-for="(item, index) in expenditureList" :key="index" @tap="chooseExpenditure(item)">
-			<view :class="['icons', item.icon]"></view>
-			<view class="expenditure-name">{{ item.name }}</view>
+		<view :class="['expenditure-item', { active: item._id === selectedId }]" v-for="(item, index) in expenditureList" :key="index" @tap="chooseExpenditure(item)">
+			<view class="icons flex flex-align flex-justify"><image :src="item.goodsImg" class="goods-img"></image></view>
+			<view class="expenditure-name">{{ item.goodsName }}</view>
 		</view>
 	</view>
 </template>
@@ -11,70 +11,19 @@
 export default {
 	data() {
 		return {
-			selectedId: 0,
-			expenditureList: [
-				{
-					id: 0,
-					name: '蔬菜',
-					icon: 'icon-shucai'
-				},
-				{
-					id: 1,
-					name: '调料',
-					icon: 'icon-tiaoliao'
-				},
-				{
-					id: 2,
-					name: '水果',
-					icon: 'icon-shuiguo'
-				},
-				{
-					id: 3,
-					name: '酒水',
-					icon: 'icon-jiushui'
-				},
-				{
-					id: 4,
-					name: '维修',
-					icon: 'icon-weixiu'
-				},
-				{
-					id: 5,
-					name: '水费',
-					icon: 'icon-shuifei'
-				},
-				{
-					id: 6,
-					name: '电费',
-					icon: 'icon-dianfei'
-				},
-				{
-					id: 7,
-					name: '煤气费',
-					icon: 'icon-tianranqi'
-				},
-				{
-					id: 8,
-					name: '聚会',
-					icon: 'icon-juhuibaomingx'
-				},
-				{
-					id: 9,
-					name: '电影票',
-					icon: 'icon-dianyingpiao'
-				},
-				{
-					id: 10,
-					name: 'K歌',
-					icon: 'icon-kge'
-				}
-			]
+			selectedId: null,
+			expenditureList: []
 		};
 	},
-	created() {},
+	created() {
+		const { goodsArray } = this.$store.state.userInfo;
+		if(goodsArray && goodsArray.length){
+			this.expenditureList = goodsArray.filter(item => item.goodsType === 1);
+		}
+	},
 	methods: {
 		chooseExpenditure(expenditure) {
-			this.selectedId = expenditure.id;
+			this.selectedId = expenditure._id;
 			this.$emit('chooseExpenditure', expenditure);
 		}
 	}
@@ -88,19 +37,22 @@ export default {
 		font-size: 24rpx;
 		color: #999;
 		text-align: center;
-		margin: 0 30rpx 30rpx 0;
+		margin: 0 20rpx 30rpx 0;
 		.icons {
-			width: 80rpx;
-			height: 80rpx;
-			line-height: 80rpx;
+			width: 90rpx;
+			height: 90rpx;
 			border-radius: 50%;
 			font-size: 46rpx;
 			color: #000;
 			background: #f4f4f4;
+			.goods-img {
+				width: 64rpx;
+				height: 64rpx;
+			}
 		}
 		&.active {
 			.icons {
-				background: #32d446;
+				background: #78e197;
 			}
 			.expenditure-name {
 				color: #000;

@@ -19,6 +19,23 @@ let _self = null,
 	canvaArea = null;
 
 export default {
+	props:{
+		chartDataProp: {
+			type: Object,
+			default(){
+				return {
+					categories: [],
+					series: [
+						{
+							name: '',
+							data: [],
+							color: '#facc14'
+						},
+					]
+				}
+			}
+		}
+	},
 	data() {
 		return {
 			cWidth: '',
@@ -27,24 +44,24 @@ export default {
 
 			// 模拟图表数据
 			chartData: {
-				categories: ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019'],
-				series: [
-					{
-						name: '成交量A',
-						data: [100, 80, 95, 150, 112, 132, 100, 50],
-						color: '#facc14'
-					},
-					{
-						name: '成交量B',
-						data: [70, 40, 65, 100, 44, 68, 50, 96],
-						color: '#2fc25b'
-					},
-					{
-						name: '成交量C',
-						data: [35, 20, 25, 37, 4, 20, 23, 30],
-						color: '#1890ff'
-					}
-				]
+				// categories: ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+				// series: [
+				// 	{
+				// 		name: '订单总数',
+				// 		data: [100, 80, 95, 150, 112, 132, 100, 50],
+				// 		color: '#facc14'
+				// 	},
+				// 	{
+				// 		name: '支出总数',
+				// 		data: [70, 40, 65, 100, 44, 68, 50, 96],
+				// 		color: '#2fc25b'
+				// 	},
+				// 	{
+				// 		name: '收入总数',
+				// 		data: [35, 20, 25, 37, 4, 20, 23, 30],
+				// 		color: '#1890ff'
+				// 	}
+				// ]
 			}
 		};
 	},
@@ -63,7 +80,6 @@ export default {
 			_self
 				.$api({ url: 'https://www.ucharts.cn/data.json' })
 				.then(res => {
-					console.log(res);
 					let Area = { categories: [], series: [] };
 					//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
 					Area.categories = res.Area.categories;
@@ -142,7 +158,16 @@ export default {
 				}
 			});
 		}
+	},
+	
+	watch:{
+		chartDataProp(obj){
+			_self.showArea('canvasArea', obj);
+			// this.chartData = obj;
+		}
+		
 	}
+	
 };
 </script>
 

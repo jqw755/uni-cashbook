@@ -94,7 +94,7 @@ export default {
 		padding: 0 28rpx;
 		font-size: 32rpx;
 		font-weight: bold;
-		background-image: linear-gradient(-90deg, #c809c2, #f3b505);
+		background-image: linear-gradient(-90deg, #4CAF50, #3fbc62);
 
 		.nav-left-wrap {
 			.icons.icon-fanhui {

@@ -1,8 +1,8 @@
 <template>
 	<view class="income-wrap flex">
-		<view :class="['income-item', { active: item.id === selectedId }]" v-for="(item, index) in incomeList" :key="index" @tap="chooseIncome(item)">
-			<view :class="['icons', item.icon]"></view>
-			<view class="income-name">{{ item.name }}</view>
+		<view :class="['income-item', { active: item._id === selectedId }]" v-for="(item, index) in incomeList" :key="index" @tap="chooseIncome(item)">
+			<view class="icons flex flex-align flex-justify"><image :src="item.goodsImg" class="goods-img"></image></view>
+			<view class="income-name">{{ item.goodsName }}</view>
 		</view>
 	</view>
 </template>
@@ -11,26 +11,19 @@
 export default {
 	data() {
 		return {
-			selectedId: 0,
-			incomeList: [
-				{
-					id: 0,
-					name: '生活费',
-					icon: 'icon-shenghuofei1'
-				},
-				{
-					id: 1,
-					name: '兼职',
-					icon: 'icon-jianzhi'
-				}
-			
-			]
+			selectedId: null,
+			incomeList: []
 		};
 	},
-	created() {},
+	created() {
+		const { goodsArray } = this.$store.state.userInfo;
+		if (goodsArray && goodsArray.length) {
+			this.incomeList = goodsArray.filter(item => item.goodsType === 2);
+		}
+	},
 	methods: {
 		chooseIncome(income) {
-			this.selectedId = income.id;
+			this.selectedId = income._id;
 			this.$emit('chooseIncome', income);
 		}
 	}
@@ -44,7 +37,7 @@ export default {
 		font-size: 24rpx;
 		color: #999;
 		text-align: center;
-		margin: 0 30rpx 30rpx 0;
+		margin: 0 20rpx 30rpx 0;
 		.icons {
 			width: 80rpx;
 			height: 80rpx;
@@ -53,10 +46,14 @@ export default {
 			font-size: 46rpx;
 			color: #000;
 			background: #f4f4f4;
+			.goods-img {
+				width: 64rpx;
+				height: 64rpx;
+			}
 		}
 		&.active {
 			.icons {
-				background: #ffde3f;
+				background: #f3de76;
 			}
 			.income-name {
 				color: #000;

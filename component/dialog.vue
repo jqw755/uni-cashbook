@@ -134,7 +134,7 @@ export default {
 			font-size: 32rpx;
 			text-align: center;
 			color: #333;
-			padding: 30rpx 0 32rpx 0;
+			padding: 30rpx 0 30rpx 0;
 		}
 		.dialog-content {
 			padding: 0 36rpx;

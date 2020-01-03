@@ -72,6 +72,19 @@
         "usingComponents" : true
     },
     "h5" : {
-        "title" : "家庭记账本"
+        "title" : "家庭记账本",
+        "router" : {
+            "mode" : "hash",
+            "base" : "/"
+        },
+        "domain" : "",
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        },
+        "devServer" : {
+            "https" : false
+        }
     }
 }
