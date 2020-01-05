@@ -45,7 +45,7 @@ export default {
 /*每个页面公共css */
 @import url('./style/base.scss');
 
-@import url('./style/icon.css');
+// @import url('./style/icon.css');
 
 // 导入j-swiper样式
 @import url('./style/j-swiper.css');

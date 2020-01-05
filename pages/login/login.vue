@@ -23,7 +23,7 @@
 		</view>
 
 		<!-- 登录按钮 -->
-		<button class="submit-login" type="primary" @tap="login">登录</button>
+		<view class="submit-login" type="primary" @tap="login">登录</view>
 
 		<view class="opts flex flex-align">
 			<text @tap="goReg" class="text">立即注册</text>
@@ -144,6 +144,7 @@ $form-border-color: rgba(214, 214, 214, 1);
 $text-color: #b6b6b6;
 
 .page_login {
+	width: 100%;
 	padding: 72rpx 72rpx;
 }
 
@@ -214,10 +215,15 @@ $text-color: #b6b6b6;
 }
 
 .submit-login {
+	height: 90rpx;
+	line-height: 90rpx;
+	text-align: center;
+	border-radius: 10rpx;
 	margin-top: 70rpx auto 50rpx;
 	color: white;
-	background-color: rgba(252, 44, 93, 1);
-	-webkit-tap-highlight-color: rgba(252, 44, 93, 1);
+	font-size: 32rpx;
+	background-color: #fc2c5d;
+	-webkit-tap-highlight-color: #fc2c5d;
 
 	&:active {
 		color: #b6b6b6;
