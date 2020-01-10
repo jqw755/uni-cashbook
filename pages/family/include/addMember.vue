@@ -1,125 +1,139 @@
 <template>
-	<view class="">
-		<j-dialog :isShowDialog="isShowDialog" :isShowCancelBtn="true" :isMaskClose="false" @closeDialog="closeDialog" @confirmDialog="registerEvt">
-			<text slot="title">添加家庭成员</text>
-			<view slot="content">
-				<view class="member-register">
-			
-					<!-- 登录form -->
-					<view class="login_form flex flex-align flex-justify">
-						<view class="input-wrap flex flex-align flex-justify">
-							<input type="text" v-model="username" placeholder="请输入账号" />
-							<view class="img"><image @tap="delUser" class="img_del" src="/static/login/clear-ipt.png" /></view>
-						</view>
+  <view class>
+    <j-dialog
+      :isShowDialog="isShowDialog"
+      :isShowCancelBtn="true"
+      :isMaskClose="false"
+      @closeDialog="closeDialog"
+      @confirmDialog="registerEvt"
+    >
+      <text slot="title">添加家庭成员</text>
+      <view slot="content">
+        <view class="member-register">
+          <!-- 登录form -->
+          <view class="login_form flex flex-align flex-justify">
+            <view class="input-wrap flex flex-align flex-justify">
+              <input type="text" v-model="username" placeholder="请输入账号" />
+              <view class="img">
+                <image @tap="delUser" class="img_del" src="/static/login/clear-ipt.png" />
+              </view>
+            </view>
 
-						<view class="line" />
+            <view class="line" />
 
-						<view class="input-wrap flex flex-align flex-justify">
-							<input :type="pwdType" :value="userpwd" @input="inputPwd" placeholder="请输入密码" />
-							<view class="img" @tap="switchPwd">
-								<image class="img_pwd_switch" v-show="pwdType === 'password'" src="/static/login/close-pwd.png" />
-								<image class="img_pwd_switch" v-show="pwdType === 'text'" src="/static/login/open-pwd.png" />
-							</view>
-						</view>
+            <view class="input-wrap flex flex-align flex-justify">
+              <input :type="pwdType" :value="userpwd" @input="inputPwd" placeholder="请输入密码" />
+              <view class="img" @tap="switchPwd">
+                <image
+                  class="img_pwd_switch"
+                  v-show="pwdType === 'password'"
+                  src="/static/login/close-pwd.png"
+                />
+                <image
+                  class="img_pwd_switch"
+                  v-show="pwdType === 'text'"
+                  src="/static/login/open-pwd.png"
+                />
+              </view>
+            </view>
 
-						<view class="line" />
+            <view class="line" />
+          </view>
 
-					</view>
-
-					<!-- 登录按钮 -->
-					<!-- <button class="submit-login" type="primary" @tap="registerEvt" :disabled="isSubmiting">注册</button> -->
-				</view>
-			</view>
-		</j-dialog>
-	</view>
+          <!-- 登录按钮 -->
+          <!-- <button class="submit-login" type="primary" @tap="registerEvt" :disabled="isSubmiting">注册</button> -->
+        </view>
+      </view>
+    </j-dialog>
+  </view>
 </template>
 
 <script>
-import jDialog from '@/component/dialog.vue';
+import jDialog from "@/component/dialog.vue";
 export default {
-	props: {
-		// 是否显示弹窗
-		isShowDialog: {
-			type: Boolean,
-			required: true,
-			default() {
-				return false;
-			}
-		}
-	},
-	data() {
-		return {
-			// isShowDialog: true
-			username: '',
-			userpwd: '',
-			pwdType: 'password',
-			isSubmiting: false
-		};
-	},
-	created() {},
-	methods: {
-		// 输入账户
-		inputUsername(e) {
-			this.username = e.target.value;
-		},
-		// 输入密码
-		inputPwd(e) {
-			this.userpwd = e.target.value;
-		},
+  props: {
+    // 是否显示弹窗
+    isShowDialog: {
+      type: Boolean,
+      required: true,
+      default() {
+        return false;
+      }
+    }
+  },
+  data() {
+    return {
+      // isShowDialog: true
+      username: "",
+      userpwd: "",
+      pwdType: "password",
+      isSubmiting: false
+    };
+  },
+  created() {},
+  methods: {
+    // 输入账户
+    inputUsername(e) {
+      this.username = e.target.value;
+    },
+    // 输入密码
+    inputPwd(e) {
+      this.userpwd = e.target.value;
+    },
 
-		// 清空账户
-		delUser() {
-			this.username = '';
-		},
-		// 查看密码
-		switchPwd() {
-			this.pwdType = this.pwdType === 'text' ? 'password' : 'text';
-		},
-		// 注册
-		registerEvt() {
-			if(this.isSubmiting){
-				return
-			}
-			const username = this.username,
-				userpwd = this.userpwd;
-			if (!username.trim()) {
-				this.$common.toast('请输入账号');
-				return;
-			}
-			if (!userpwd.trim()) {
-				this.$common.toast('请输入密码');
-				return;
-			}
-			
-			const params = {
-				userName: username,
-				password: userpwd
-			};
-			this.isSubmiting = true;
-			this.$api({
-				url: '/user/register',
-				data: params
-			})
-				.then(res => {
-					this.closeDialog();
-					this.$emit('addMemberSuccess', true);
-				})
-				.catch(e => {
-					this.$common.toast(e.msg);
-				})
-				.finally(() => {
-					this.isSubmiting = false;
-				});
-		},
+    // 清空账户
+    delUser() {
+      this.username = "";
+    },
+    // 查看密码
+    switchPwd() {
+      this.pwdType = this.pwdType === "text" ? "password" : "text";
+    },
+    // 注册
+    registerEvt() {
+      if (this.isSubmiting) {
+        return;
+      }
+      const username = this.username,
+        userpwd = this.userpwd;
+      if (!username.trim()) {
+        this.$common.toast("请输入账号");
+        return;
+      }
+      if (!userpwd.trim()) {
+        this.$common.toast("请输入密码");
+        return;
+      }
 
-		closeDialog() {
-			this.username = '';
-			this.userpwd = '';
-			this.pwdType = 'password';
-			this.$emit('closeDialog', false);
-		}
-	},
-	components: { jDialog }
+      const params = {
+        userName: username,
+        password: userpwd
+      };
+      this.isSubmiting = true;
+      this.$api({
+        url: "/user/register",
+        data: params
+      })
+        .then(res => {
+          this.closeDialog();
+          this.$emit("addMemberSuccess", true);
+        })
+        .catch(e => {
+          this.$common.toast(e.msg);
+        })
+        .finally(() => {
+          this.isSubmiting = false;
+        });
+    },
+
+    closeDialog() {
+      this.username = "";
+      this.userpwd = "";
+      this.pwdType = "password";
+      this.$emit("closeDialog", false);
+    }
+  },
+  components: { jDialog }
 };
 </script>
 

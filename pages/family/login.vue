@@ -87,9 +87,7 @@ export default {
 			})
 				.then(async res => {
 					if(res){
-					  this.$store.commit('SETTOKEN', res.token);
 					  this.$store.commit('SETUSERINFO', res);
-						await this.$common.setStorage('token', res.token);
 						await this.$common.setStorage('userInfo', res);
 						// 重定向到家庭账户页面
 						uni.redirectTo({

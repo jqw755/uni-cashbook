@@ -13,8 +13,8 @@ let config = {
 	// 各个环境下域名
 	dev: {
 		// baseUrl: "http://rap2api.taobao.org/app/mock/237547",
-		// baseUrl: "http://localhost:3000/cashbook/api/v1", // koa提供服务
-		baseUrl: "http://101.132.176.130:3000/cashbook/api/v1", // ali
+		baseUrl: "http://localhost:3000/cashbook/api/v1", // koa提供服务
+		// baseUrl: "http://101.132.176.130:3000/cashbook/api/v1", // ali
 	},
 	test: {
 		baseUrl: "http://192.168.1.106:8080/cashbook"

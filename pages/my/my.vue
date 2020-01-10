@@ -23,7 +23,7 @@
 
 				<!-- 中间个人信息 -->
 				<view class="middle-info text-center">
-					<view class="" @tap="actionUploadAvatar(true)">
+					<view class="avatar-wrap" @tap="actionUploadAvatar(true)">
 						<image :src="userData.avatar" mode="" class="user-avatar" v-if="userData.avatar"></image>
 						<image src="/static/family/default-head-bg.jpg" mode="" class="user-avatar" v-else></image>
 					</view>
@@ -156,7 +156,7 @@ export default {
 						filePath: tempFilePaths[0],
 						name: 'avatarFile',
 						header: {
-							Authorization: _self.$store.state.token
+							Authorization: _self.store.userInfo.token
 						},
 						success: data => {
 							const parseData = JSON.parse(data.data);
@@ -255,13 +255,18 @@ export default {
 			}
 
 			.middle-info {
-				.user-avatar {
+				.avatar-wrap{
 					width: 146rpx;
 					height: 146rpx;
 					border: 4rpx solid rgba(244, 244, 244, 0.5);
 					border-radius: 50%;
 					overflow: hidden;
 					box-shadow: 0 0 4rpx 4rpx rgba(0, 0, 0, 0.1);
+					margin: 0 auto;
+				}
+				.user-avatar {
+					width: 146rpx;
+					height: 146rpx;
 				}
 				.user-name {
 					font-size: 30rpx;
