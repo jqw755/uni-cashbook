@@ -5,17 +5,12 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		token: '',
 		userInfo: {},
 		isOpenIndexAni: false, // 是否开启首页动画
 		isHomeTabRefresh: false, // 是否记账成功
 	},
 
 	mutations: {
-		// 设置token
-		SETTOKEN(state, data) {
-			state.token = data;
-		},
 
 		// 设置userInfo
 		SETUSERINFO(state, data) {

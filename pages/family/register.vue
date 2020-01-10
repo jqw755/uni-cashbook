@@ -95,8 +95,8 @@ export default {
 			})
 				.then(async res => {
 					if (res) {
-						this.$store.commit('SETTOKEN', res.token);
-						await this.$common.setStorage('token', res.token);
+						this.$store.commit('SETUSERINFO', res);
+						await this.$common.setStorage('userInfo', res);
 						uni.redirectTo({
 							url: '/pages/family/index'
 						});

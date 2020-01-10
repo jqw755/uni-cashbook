@@ -1,7 +1,7 @@
 <template>
 	<view class="income-wrap flex">
 		<view :class="['income-item', { active: item._id === selectedId }]" v-for="(item, index) in incomeList" :key="index" @tap="chooseIncome(item)">
-			<view class="icons flex flex-align flex-justify"><image :src="item.goodsImg" class="goods-img"></image></view>
+			<view class="goods-img-wrap flex flex-align flex-justify"><image :src="item.goodsImg" class="goods-img"></image></view>
 			<view class="income-name">{{ item.goodsName }}</view>
 		</view>
 	</view>
@@ -38,7 +38,7 @@ export default {
 		color: #999;
 		text-align: center;
 		margin: 0 20rpx 30rpx 0;
-		.icons {
+		.goods-img-wrap {
 			width: 80rpx;
 			height: 80rpx;
 			line-height: 80rpx;
@@ -52,7 +52,7 @@ export default {
 			}
 		}
 		&.active {
-			.icons {
+			.goods-img-wrap {
 				background: #f3de76;
 			}
 			.income-name {

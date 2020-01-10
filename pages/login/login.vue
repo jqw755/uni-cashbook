@@ -85,11 +85,8 @@ export default {
 			})
 				.then(async res => {
 					if (res) {
-						await this.$common.setStorage('token', res.token);
 						await this.$common.setStorage('userInfo', res);
-						this.$store.commit('SETTOKEN', res.token);
 						this.$store.commit('SETUSERINFO', res);
-						
 						// 通知首页刷新
 						if(this.isShowNavBar){
 							this.$store.commit('ISHOMETABREFRESH', true);

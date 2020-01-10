@@ -46,7 +46,7 @@
 					<view class="balance-container">
 						<view class="balance-wrap">
 							<view class="money-title"><text>当前余额（元）</text></view>
-							<view class="money-count">{{ $store.state.userInfo.balance }}</view>
+							<view class="money-count">{{ store.userInfo.balance }}</view>
 						</view>
 					</view>
 
@@ -54,7 +54,7 @@
 					<view class="my-fun-wrap">
 						<view class="my-fun-item is-open-index-ani">
 							<text>首页动画</text>
-							<switch class="open-index-switch f-right" color="#00d18b" :checked="$store.state.isOpenIndexAni" @change="isOpenIndexAniEvt" />
+							<switch class="open-index-switch f-right" color="#00d18b" :checked="store.isOpenIndexAni" @change="isOpenIndexAniEvt" />
 						</view>
 					</view>
 				</view>
@@ -87,6 +87,8 @@ import config from '@/common/config.js';
 export default {
 	data() {
 		return {
+			store: {},
+			
 			userData: {},
 
 			currentTab: 0,
@@ -108,6 +110,8 @@ export default {
 	},
 
 	onShow() {
+		this.store = this.$store.state;
+		
 		this.createGreetings();
 		
 	},

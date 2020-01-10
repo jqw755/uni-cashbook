@@ -130,6 +130,7 @@ page {
 }
 
 .page_login {
+	width: 100%;
 	padding: 72rpx 72rpx;
 }
 

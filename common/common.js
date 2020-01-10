@@ -44,8 +44,8 @@ const common = {
 	/* 
 	 异步设置本地存储
 	 */
-	async setStorage(key, data) {
-		let oldStore = await this.getStorage();
+	setStorage(key, data) {
+		let oldStore = this.getStorage();
 		oldStore[key] = data;
 		uni.setStorage({
 			key: 'STORAGESTATE',

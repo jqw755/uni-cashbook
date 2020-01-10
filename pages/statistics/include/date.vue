@@ -44,7 +44,7 @@ export default {
 	methods: {
 		// 视图改变
 		chooseDateType(e) {
-			const id = e.target.value;
+			const id = Number(e.target.value);
 			if (this.dataIndex === id) {
 				return;
 			}

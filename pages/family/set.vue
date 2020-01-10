@@ -7,13 +7,13 @@
 			<!-- 修改密码 -->
 			<view class="set-item" hover-class="hover-current" @tap="changePwd">
 				<text>修改密码</text>
-				<text class="icons icon-jiantou_you f-right"></text>
+				<text class="icons f-right"></text>
 			</view>
 
 			<!-- 修改密码 -->
 			<view class="set-item" hover-class="hover-current" @tap="clearStorage">
 				<text>清空缓存</text>
-				<text class="icons icon-jiantou_you f-right"></text>
+				<text class="icons f-right"></text>
 			</view>
 		</view>
 

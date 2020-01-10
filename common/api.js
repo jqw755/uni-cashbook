@@ -1,5 +1,4 @@
 import config from '@/common/config.js'
-import common from '@/common/common.js'
 import store from '@/store/index.js'
 
 /**
@@ -20,9 +19,10 @@ const api = ({
 
 	// 如果此接口需要token
 	if (!notToken) {
+		const token = store.state.userInfo.token;
 		header = {
 			...header,
-			'Authorization': common.getStorage().token || ''
+			'Authorization': token || ''
 		}
 	}
 

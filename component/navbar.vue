@@ -80,6 +80,9 @@ export default {
 
 <style lang="scss">
 .nav-bar-wrap {
+	/* #ifdef MP */
+	display: none !important;
+	/* #endif */
 	.nav-bar-fixed-wrap {
 		width: 100%;
 		justify-content: space-between;
@@ -97,8 +100,11 @@ export default {
 		background-image: linear-gradient(-90deg, #4CAF50, #3fbc62);
 
 		.nav-left-wrap {
+			font-weight: 400;
 			.icons.icon-fanhui {
-				margin-right: 10rpx;
+				background-position: -160rpx 0;
+				top: 4rpx;
+				margin-right: 4rpx;
 			}
 		}
 

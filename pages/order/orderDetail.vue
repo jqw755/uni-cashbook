@@ -149,7 +149,8 @@ export default {
 				margin-bottom: 0;
 			}
 			.detail-tip {
-				flex-basis: 120rpx;
+				flex-shrink: 0;
+				width: 120rpx;
 				margin-right: 20rpx;
 				font-size: 26rpx;
 				color: #808080;

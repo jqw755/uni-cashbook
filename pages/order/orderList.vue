@@ -83,6 +83,7 @@ export default {
 
 <style lang="scss">
 .order-list-container {
+	width: 100%;
 	background: #fff;
 }
 </style>

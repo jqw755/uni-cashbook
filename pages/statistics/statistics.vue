@@ -24,8 +24,8 @@
 				<!-- 支出 -->
 				<view class="cate-item-wrap by-expenditure-wrap">
 					<view class="by-cate-title flex flex-align" @tap="tapCateTitle(2)">
-						<text>支出：{{ expenditureSelObj.name }}</text>
-						<text :class="['icons icon-arrow-down icon-xiajiantou', { 'icon-rotate': isShowExpend }]"></text>
+						<text>支出：{{ expenditureSelObj.goodsName||'' }}</text>
+						<text :class="['icons icon-arrow-down', { 'icon-rotate': isShowExpend }]"></text>
 					</view>
 
 					<view :class="['page-cate-list-wrap', { down: isShowExpend }]">
@@ -36,8 +36,8 @@
 				<!-- 收入 -->
 				<view class="cate-item-wrap by-income-wrap">
 					<view class="by-cate-title flex flex-align" @tap="tapCateTitle(1)">
-						<text>收入：{{ incomeSelObj.name }}</text>
-						<text :class="['icons icon-arrow-down icon-xiajiantou', { 'icon-rotate': isShowIncome }]"></text>
+						<text>收入：{{ incomeSelObj.goodsName||'' }}</text>
+						<text :class="['icons icon-arrow-down', { 'icon-rotate': isShowIncome }]"></text>
 					</view>
 
 					<view :class="['page-cate-list-wrap', { down: isShowIncome }]">
@@ -48,10 +48,10 @@
 		</view>
 
 		<!-- 图表 -->
-		<chart :chartDataProp="chartData"/>
+		<chart :chartDataProp="chartData" />
 
 		<!-- 排行，最高最低的前十 -->
-		<ranking :rankingTopOrders="rankingTopOrders" :rankingLastOrders="rankingLastOrders" :rankingDateType="rankingDateType" />
+		<ranking :incomeTopOrders="incomeTopOrders" :expenditureTopOrders="expenditureTopOrders" :rankingDateType="rankingDateType" />
 	</view>
 </template>
 
@@ -78,23 +78,28 @@ export default {
 
 			rankingDateType: 0, // 根据页面上日期筛选类型展示
 
-			rankingTopOrders: [], // 收入最高
+			incomeTopOrders: [], // 收入最高
 
-			rankingLastOrders: [], // 支出最高
-			
+			expenditureTopOrders: [], // 支出最高
+
 			// 图表数据
 			chartData: {}
-			
 		};
 	},
 
 	onLoad() {
 		// 默认查询本年当月数据
 		const date = new Date();
-		this.getRanking({ year: date.getFullYear(), month: date.getMonth() + 1 });
-		// this.getRanking({year: 2019, month: 11, goodsId: "5e09bf12f3787b47aceaa892"});
-		// this.getRanking({year: 2019,  month: 11});
-		// this.getRanking({year: 2019, goodsId: "5e09bf12f3787b47aceaa892"});
+		const year = date.getFullYear(),
+			month = date.getMonth() + 1;
+
+		const a = this.getRanking({ year, month });
+		const b = this.getTopAndLast({ year, month, orderType: 1 });
+		const c = this.getTopAndLast({ year, month, orderType: 2 });
+		uni.showLoading()
+		Promise.all([a, b, c]).then(()=>{
+			uni.hideLoading()
+		})
 	},
 
 	methods: {
@@ -109,11 +114,43 @@ export default {
 				this.dateResult = new Date().getFullYear();
 				this.rankingDateType = 1;
 			}
+
+			// 日期改变，更新图表
+			this.updateChartByDate();
 		},
 
-		// 选择日期
+		// 选择日期  res: '2019-11' || '2019'
 		chooseDate(res) {
 			this.dateResult = res;
+			// 日期改变，更新图表
+			this.updateChartByDate();
+		},
+
+		/* date: '2019-11' || '2019'*/
+		updateChartByDate(date = this.dateResult, goodsId) {
+			const dateArr = String(date).split('-');
+			let params = {
+				year: dateArr[0]
+			};
+			if (dateArr[1]) {
+				Object.assign(params, {
+					month: dateArr[1]
+				});
+			}
+			if (goodsId) {
+				Object.assign(params, { goodsId });
+			}
+
+			const a = this.getRanking(params);
+			// 消费最高的十个
+			const b = this.getTopAndLast({ ...params, orderType: 1 });
+			// 最低的十个
+			const c = this.getTopAndLast({ ...params, orderType: 2 });
+			
+			uni.showLoading()
+			Promise.all([a, b, c]).then(()=>{
+				uni.hideLoading()
+			})
 		},
 
 		// 切换收支类型展示更多
@@ -131,43 +168,66 @@ export default {
 		// 选择收入类型
 		chooseIncome(data) {
 			this.incomeSelObj = data;
+			// 收入类型改变，更新图表
+			this.updateChartByDate(this.dateResult, data._id);
 		},
 
 		// 选择支出类型
 		chooseExpenditure(data) {
 			this.expenditureSelObj = data;
+			// 收入类型改变，更新图表
+			this.updateChartByDate(this.dateResult, data._id);
 		},
 
 		// 查询排行方法
 		getRanking(params) {
-			this.$api({ url: '/user/getRanking', data: { rankingParams: params } })
+			return this.$api({ url: '/user/getRanking', data: { rankingParams: params }, notLoading: true })
 				.then(res => {
 					if (res) {
-						
 						let Area = { categories: [], series: [] };
-						let totalOrder = [], totalMoney = [];
-						
-						if(res && res.length){
-							res.forEach(item => {
-								Area.categories.push(item._id);
-								totalOrder.push(item.totalOrder);
-								totalMoney.push(item.totalMoney);
-							});
-							Area.series = [
-								{
-									name: '订单数',
-									data: totalOrder,
-									color: '#facc14'
-								},
-								{
-									name: '总金额',
-									data: totalMoney,
-									color: '#2fc25b'
-								},
-							]
-							this.chartData = Area;
+						let totalOrder = [],
+							totalMoney = [];
+
+						res.forEach(item => {
+							Area.categories.push(item._id);
+							totalOrder.push(item.totalOrder);
+							totalMoney.push(item.totalMoney);
+						});
+
+						Area.series = [
+							{
+								name: '订单数',
+								data: totalOrder,
+								color: '#facc14'
+							},
+							{
+								name: '总金额',
+								data: totalMoney,
+								color: '#2fc25b'
+							}
+						];
+
+						this.chartData = Area;
+						return 1;
+					}
+				})
+				.catch(e => {
+					this.$common.toast(e.msg);
+				})
+				.finally(() => {});
+		},
+
+		// 获取最值
+		getTopAndLast(params) {
+			return this.$api({ url: '/user/getTopAndLast', data: { rankingParams: params }, notLoading: true })
+				.then(res => {
+					if (res) {
+						if (params.orderType === 2) {
+							this.incomeTopOrders = res;
+						} else {
+							this.expenditureTopOrders = res;
 						}
-						
+						return 1;
 					}
 				})
 				.catch(e => {
@@ -175,27 +235,6 @@ export default {
 				})
 				.finally(() => {});
 		}
-	},
-
-	watch:{
-		dateResult(val){
-			const dateArr = String(val).split('-');
-			let params = {
-				year: dateArr[0]
-			};
-			if( dateArr[1]){
-				Object.assign(params, {
-					month: dateArr[1]
-				})
-			}
-			// if(){
-			// 	Object.assign(params, {
-			// 		goodsId: params[1]
-			// 	})
-			// }
-			
-			this.getRanking(params);
-		},
 	},
 
 	components: {
@@ -210,6 +249,7 @@ export default {
 
 <style lang="scss">
 .statistics-container {
+	width: 100%;
 	background: #fff;
 
 	.by-wrap {
@@ -274,10 +314,10 @@ export default {
 						}
 
 						.icon-arrow-down {
-							transition: all 400ms;
+							transition: transform 300ms;
 
 							&.icon-rotate {
-								transform: rotate(180deg);
+								transform: rotate(90deg);
 							}
 						}
 					}
