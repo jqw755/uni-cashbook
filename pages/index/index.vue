@@ -85,13 +85,21 @@ export default {
     };
   },
 
-  onLoad() {
+  async onLoad() {
+		const { userInfo } = this.$common.getStorage();
+
+		if (!userInfo) {
+		  uni.redirectTo({
+		    url: "/pages/login/login"
+		  });
+		  return;
+		}
     this.getOrderList();
   },
 
   onShow() {
     this.store = this.$store.state;
-    console.log(this.store);
+
     // 刷新tab首页
     if (this.store.isHomeTabRefresh) {
       this.getOrderList();

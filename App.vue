@@ -23,8 +23,7 @@ export default {
     });
 
     // 刷新页面后，从本地取，存入store，方便其余页面直接从store获取而不用执行本地存储读取操作。
-    let { userInfo } = await this.$common.getStorage();
-
+    const { userInfo } = await this.$common.getStorage();
     this.$store.commit("SETUSERINFO", userInfo || {});
   },
 
