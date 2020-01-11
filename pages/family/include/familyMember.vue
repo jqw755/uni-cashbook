@@ -20,8 +20,8 @@
 			<view v-for="(item, index) in familyData.members" :key="index" class="member-item text-center" @tap="queryMember(item)">
 				<view class="member-avatar-wrap">
 					<image :src="item.avatar" mode="widthFix" class="member-avatar" v-if="item.avatar"></image>
-					<image src="/static/contact-avatar.png" mode="widthFix" class="member-avatar" v-else></image>
-					</view>
+					<image src="/static/family/default-head-bg.jpg" mode="widthFix" class="member-avatar" v-else></image>
+				</view>
 				<view class="member-name text-overflow">{{item.userName}}</view>
 			</view>
 

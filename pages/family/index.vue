@@ -81,7 +81,7 @@ export default {
 
 		// 添加成功
 		addMemberSuccess() {
-			this.closeDialog();
+			this.closeDialog(false);
 			this.getFamilyInfo();
 		},
 
