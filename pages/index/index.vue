@@ -121,6 +121,7 @@ export default {
 
   // 下拉刷新
   async onPullDownRefresh() {
+	this.getUserInfo();
     this.getOrderList();
     uni.stopPullDownRefresh();
   },
@@ -156,7 +157,22 @@ export default {
       uni.navigateTo({
         url: "/pages/bookkeep/index"
       });
-    }
+    },
+	// 查询用户信息
+	getUserInfo() {
+		this.$api({
+			url: '/user/info'
+		})
+			.then(res => {
+				if (res) {
+					 this.$store.commit("SETUSERINFO", res);
+				}
+			})
+			.catch(e => {
+				this.$common.showModal(e.msg || '');
+			})
+			.finally(() => {});
+	}
   },
 
   components: {

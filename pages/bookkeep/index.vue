@@ -66,6 +66,7 @@ export default {
 	onLoad() {},
 
 	methods: {
+			
 		// 点击tab
 		changeTab(id) {
 			this.currentTab = id;

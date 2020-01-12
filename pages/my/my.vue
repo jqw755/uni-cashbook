@@ -115,7 +115,11 @@ export default {
 		this.createGreetings();
 		
 	},
-
+	// 下拉刷新
+	async onPullDownRefresh() {
+	  this.getUserInfo();
+	  uni.stopPullDownRefresh();
+	},
 	methods: {
 		// 获取问候据
 		createGreetings() {
@@ -193,6 +197,7 @@ export default {
 			})
 				.then(res => {
 					if (res) {
+						res.balance = res.balance || res.balance === 0 ? res.balance.toFixed(2) : '--';
 						this.userData = res;
 					}
 				})

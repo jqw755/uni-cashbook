@@ -18,6 +18,13 @@
 
 			<ul class="order-detail-bottom">
 				<li class="detail-item">
+					<text class="detail-tip">记账人</text>
+					<view class="flex flex-align">
+						<image :src="createrData.avatar" mode="" class="creater-avatar"></image>
+						<text>{{ createrData.userName}}</text>
+					</view>
+				</li>
+				<li class="detail-item">
 					<text class="detail-tip">当前状态</text>
 					<text>{{ orderData.orderState === 1 ? '已完成' : '未知'}}</text>
 				</li>
@@ -62,7 +69,8 @@ export default {
 	data() {
 		return {
 			orderNo: '',
-			orderData: {}
+			orderData: {},// 订单信息
+			createrData: {}, // 订单创建人信息
 		};
 	},
 
@@ -84,9 +92,11 @@ export default {
 			})
 				.then(res => {
 					if (res) {
-						res.createTime = res.createTime ? utils.formatDate(res.createTime, 'yyyy-MM-dd hh:mm:ss') : '--';
-						res.payTime = res.payTime ? utils.formatDate(res.payTime, 'yyyy-MM-dd hh:mm:ss') : '--';
-						this.orderData = res;
+						const {detail, creater} = res;
+						detail.createTime = detail.createTime ? utils.formatDate(detail.createTime, 'yyyy-MM-dd hh:mm:ss') : '--';
+						detail.payTime = detail.payTime ? utils.formatDate(detail.payTime, 'yyyy-MM-dd hh:mm:ss') : '--';
+						this.orderData = detail;
+						this.createrData = creater;
 					}
 				})
 				.catch(e => {
@@ -147,6 +157,12 @@ export default {
 			color: #000;
 			&:last-child {
 				margin-bottom: 0;
+			}
+			.creater-avatar{
+				width: 46rpx;
+				height: 46rpx;
+				border-radius: 50%;
+				margin-right: 6rpx;
 			}
 			.detail-tip {
 				flex-shrink: 0;

@@ -24,7 +24,9 @@
 		},
 		{
 			"path": "pages/family/index",
-			"style": {}
+			"style": {
+				"enablePullDownRefresh": true
+			}
 		},
 		{
 			"path": "pages/family/login",
@@ -40,7 +42,9 @@
 		},
 		{
 			"path": "pages/my/my",
-			"style": {}
+			"style": {
+				"enablePullDownRefresh": true
+			}
 		},
 		{
 			"path": "pages/my/set",

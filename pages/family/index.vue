@@ -57,7 +57,12 @@ export default {
 		};
 	},
 	onLoad() {
-		this.getFamilyInfo();
+	 this.getFamilyInfo();
+	},
+	// 下拉刷新
+	async onPullDownRefresh() {
+	  this.getFamilyInfo();
+	  uni.stopPullDownRefresh();
 	},
 	methods: {
 		// 滑动swiper
