@@ -20,7 +20,8 @@
 				<li class="detail-item">
 					<text class="detail-tip">记账人</text>
 					<view class="flex flex-align">
-						<image :src="createrData.avatar" mode="" class="creater-avatar"></image>
+						<image v-if="createrData.avatar" :src="createrData.avatar" mode="" class="creater-avatar"></image>
+						<image v-else src="/static/family/default-head-bg.jpg" mode="" class="creater-avatar"></image>
 						<text>{{ createrData.userName}}</text>
 					</view>
 				</li>
