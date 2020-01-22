@@ -261,8 +261,8 @@ export default {
 
 			.middle-info {
 				.avatar-wrap{
-					width: 146rpx;
-					height: 146rpx;
+					width: 160rpx;
+					height: 160rpx;
 					border: 4rpx solid rgba(244, 244, 244, 0.5);
 					border-radius: 50%;
 					overflow: hidden;
@@ -270,8 +270,8 @@ export default {
 					margin: 0 auto;
 				}
 				.user-avatar {
-					width: 146rpx;
-					height: 146rpx;
+					width: 160rpx;
+					height: 160rpx;
 				}
 				.user-name {
 					font-size: 30rpx;

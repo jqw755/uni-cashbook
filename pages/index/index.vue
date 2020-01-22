@@ -158,21 +158,21 @@ export default {
         url: "/pages/bookkeep/index"
       });
     },
-	// 查询用户信息
-	getUserInfo() {
-		this.$api({
-			url: '/user/info'
-		})
-			.then(res => {
-				if (res) {
-					 this.$store.commit("SETUSERINFO", res);
-				}
-			})
-			.catch(e => {
-				this.$common.showModal(e.msg || '');
-			})
-			.finally(() => {});
-	}
+	  // 查询用户信息
+    getUserInfo() {
+      this.$api({
+        url: '/user/info'
+      })
+        .then(res => {
+          if (res) {
+            this.$store.commit("SETUSERINFO", res);
+          }
+        })
+        .catch(e => {
+          this.$common.showModal(e.msg || '');
+        })
+        .finally(() => {});
+    }
   },
 
   components: {
