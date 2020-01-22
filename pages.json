@@ -90,7 +90,7 @@
 				"text": "统计"
 			},
 			{
-				"pagePath": "pages/contacts/contacts",
+				"pagePath": "pages/contacts/index",
 				"iconPath": "static/tabbar/chat.png",
 				"selectedIconPath": "static/tabbar/select-chat.png",
 				"text": "圈子"
