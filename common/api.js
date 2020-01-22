@@ -1,8 +1,6 @@
 import config from '@/common/config.js'
 import common from '@/common/common.js'
 
-const {userInfo} = common.getStorage();
-
 /**
  @param url: 接口地址
  @param data: 请求参数(可选)
@@ -21,6 +19,7 @@ const api = ({
 
 	// 如果此接口需要token
 	if (!notToken) {
+		const {userInfo} = common.getStorage();
 		header = {
 			...header,
 			'Authorization': userInfo.token || ''
@@ -61,6 +60,7 @@ const api = ({
 
 					// 登录失效
 					if (code === 20 || code === 21) {
+						const {userInfo} = common.getStorage();
 						let url = '';
 						if (userInfo.familyId) {
 							url = '/pages/login/login'
