@@ -1,6 +1,7 @@
 import config from '@/common/config.js'
+import common from '@/common/common.js'
 
-/** 
+/**
  @param url: 接口地址
  @param data: 请求参数(可选)
  @param header: 请求头(可选)
@@ -9,7 +10,7 @@ import config from '@/common/config.js'
  */
 const api = ({
 	url = '/',
-	method = 'GET',
+	method = 'POST',
 	data = {},
 	header = {},
 	notLoading = false,
@@ -17,8 +18,12 @@ const api = ({
 }) => {
 
 	// 如果此接口需要token
-	if (notToken) {
-
+	if (!notToken) {
+		const {userInfo} = common.getStorage();
+		header = {
+			...header,
+			'Authorization': userInfo.token || ''
+		}
 	}
 
 	// 避免传参null/undefined
@@ -46,26 +51,61 @@ const api = ({
 			data,
 			header,
 			success(res) {
-				const {
-					code,
-					data,
-					msg
-				} = res.data;
-
-				if (code === 0 && data) {
-					resolve(data)
-				} else {
-					reject({
+				try {
+					const {
 						code,
+						data,
 						msg
+					} = res.data;
+
+					// 登录失效
+					if (code === 20 || code === 21) {
+						const {userInfo} = common.getStorage();
+						let url = '';
+						if (userInfo.familyId) {
+							url = '/pages/login/login'
+						} else {
+							url = '/pages/family/login'
+						}
+
+						uni.showModal({
+							title: '提示',
+							content: '登录失效,请重新登录',
+							showCancel: false,
+							success (res) {
+								uni.navigateTo({
+									url
+								})
+							}
+						});
+
+						return
+					}
+
+					// 请求成功
+					if (code === 0 && data) {
+						resolve(data)
+					} else {
+						reject({
+							code,
+							msg
+						})
+					}
+
+				} catch (e) {
+					console.log(e)
+					reject({
+						code: -1,
+						msg: '请求出错，请稍后再试'
 					})
 				}
+
 			},
 			fail(e) {
 				console.log(e)
 				const msg = "服务出错，请稍后再试"; // 错误提示
 				reject({
-					code: -999,
+					code: -1,
 					msg: e.errMsg || msg
 				});
 			},

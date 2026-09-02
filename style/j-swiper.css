@@ -1,0 +1,7 @@
+/* 由于swiper是单独组件，外部无法调用组件内部的样式，需要单独引入 */
+
+.j-swiper-item {
+	width: 100%;
+	flex: 1;
+	overflow: hidden;
+}

@@ -19,6 +19,17 @@ let _self = null,
 	canvaArea = null;
 
 export default {
+	props:{
+		chartDataProp: {
+			type: Object,
+			default(){
+				return {
+					categories: [],
+					series: []
+				}
+			}
+		}
+	},
 	data() {
 		return {
 			cWidth: '',
@@ -27,23 +38,23 @@ export default {
 
 			// 模拟图表数据
 			chartData: {
-				categories: ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+				categories: [], // '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019'
 				series: [
-					{
-						name: '成交量A',
-						data: [100, 80, 95, 150, 112, 132, 100, 50],
-						color: '#facc14'
-					},
-					{
-						name: '成交量B',
-						data: [70, 40, 65, 100, 44, 68, 50, 96],
-						color: '#2fc25b'
-					},
-					{
-						name: '成交量C',
-						data: [35, 20, 25, 37, 4, 20, 23, 30],
-						color: '#1890ff'
-					}
+					// {
+					// 	name: '订单总数',
+					// 	data: [100, 80, 95, 150, 112, 132, 100, 50],
+					// 	color: '#facc14'
+					// },
+					// {
+					// 	name: '支出总数',
+					// 	data: [70, 40, 65, 100, 44, 68, 50, 96],
+					// 	color: '#2fc25b'
+					// },
+					// {
+					// 	name: '收入总数',
+					// 	data: [35, 20, 25, 37, 4, 20, 23, 30],
+					// 	color: '#1890ff'
+					// }
 				]
 			}
 		};
@@ -55,26 +66,9 @@ export default {
 		this.cHeight = uni.upx2px(500);
 
 		// 调用初始化图表方法
-		this.showArea(canvasId, this.chartData);
+		this.showArea('canvasArea', this.chartData);
 	},
 	methods: {
-		// 获取图表数据
-		getServerData() {
-			_self
-				.$api({ url: 'https://www.ucharts.cn/data.json' })
-				.then(res => {
-					console.log(res);
-					let Area = { categories: [], series: [] };
-					//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-					Area.categories = res.Area.categories;
-					Area.series = res.Area.series;
-					_self.showArea('canvasArea', Area);
-				})
-				.catch(e => {
-					_self.$toast(e.msg);
-				})
-				.finally();
-		},
 
 		// 绘制图表
 		showArea(canvasId, chartData) {
@@ -98,7 +92,7 @@ export default {
 					gridColor: '#CCCCCC',
 					gridType: 'dash',
 					dashLength: 4,
-					itemCount: 7, //x轴单屏显示数据的数量，默认为5个
+					itemCount: 12, //x轴单屏显示数据的数量，默认为5个
 					scrollShow: true, //新增是否显示滚动条，默认false
 					scrollAlign: 'left', //滚动条初始位置
 					scrollBackgroundColor: '#F7F7FF' //默认为 #EFEBEF
@@ -109,8 +103,8 @@ export default {
 					gridColor: '#CCCCCC',
 					dashLength: 4,
 					splitNumber: 5,
-					min: 10,
-					max: 180
+					// min: 10,
+					// max: 180
 				},
 				width: _self.cWidth * _self.pixelRatio,
 				height: _self.cHeight * _self.pixelRatio,
@@ -142,7 +136,16 @@ export default {
 				}
 			});
 		}
+	},
+	
+	watch:{
+		chartDataProp(obj){
+			_self.showArea('canvasArea', obj);
+			// this.chartData = obj;
+		}
+		
 	}
+	
 };
 </script>
 

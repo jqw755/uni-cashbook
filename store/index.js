@@ -5,14 +5,27 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-
+		userInfo: {},
+		isOpenIndexAni: false, // 是否开启首页动画
+		isHomeTabRefresh: false, // 是否记账成功
 	},
 
 	mutations: {
-		// LOGIN(state, data) {
-			// state.hasLogin = true;
-			// state.userInfo = data;
-		//},
+
+		// 设置userInfo
+		SETUSERINFO(state, data) {
+			state.userInfo = data;
+		},
+
+		// 设置是否开启首页动画
+		SETINDEXANI(state, data) {
+			state.isOpenIndexAni = data;
+		},
+
+		// 返回tab首页时刷新数据
+		ISHOMETABREFRESH(state, data) {
+			state.isHomeTabRefresh = data;
+		},
 
 	},
 
@@ -20,8 +33,6 @@ const store = new Vuex.Store({
 		//setMapMarkerBg({ commit }, o){
 		//  commit("SETMAPMARKERBG", o);
 		//},
-
-
 
 	}
 })
